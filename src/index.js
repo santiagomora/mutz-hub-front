@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import AppRouting from './main/AppRouting.jsx';
 import * as serviceWorker from './serviceWorker';
+import bootstrap from 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <AppRouting/>,
+    document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

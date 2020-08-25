@@ -13,6 +13,19 @@ body,div,li,button{
     height:50vh;
 }
 
+.mtmargin{
+    margin-top:15px;
+}
+.mhpadding{
+    margin-right:15px;
+    margin-left:15px;
+}
+.sbpadding{
+    padding-bottom:5px;
+}
+.mtmargin{
+    margin:auto;
+}
 a:hover{
     text-decoration:none!important;
 }
@@ -41,21 +54,25 @@ a:hover{
     border-radius:3px;
 }
 
-
 .grayline{
-    height:1px;
-    border:solid 1.5px var(--lgray);
+    height:4px;
+    border:solid 1px var(--lgray);
     background-color:var(--lgray);
     border-radius:5px;
 }
-
+.redfont{
+    color:var(--outline);
+}
 .greenline{
     height:4px;
     border:solid 1px var(--main);
     background-color:var(--main);
     border-radius:5px;
 }
+.greenback{
+    background-color: var(--main) !important;
 
+}
 .nopadding{
     padding:0px !important;
 }
@@ -112,7 +129,9 @@ a:hover{
 .vmiddle{
     vertical-align: middle !important;
 }
-
+.subalign{
+    vertical-align: sub !important;
+}
 .mvmargin{
     margin-top:15px;
     margin-bottom:15px;
@@ -177,6 +196,10 @@ a:hover{
 .light{
     color:var(--lgray);
 }
+
+.dark{
+    color:var(--dgray);
+}
 .hidden{
     display:none;
 }
@@ -217,8 +240,8 @@ button{
     border-radius:5px;
 }
 .mborder{
-    border:solid 2px var(--main);
-    border-radius:4px;
+    border:solid 3px var(--main);
+    border-radius:5px;
 }
 .mback{
     background-color:var(--main);
@@ -236,9 +259,9 @@ button{
     width:50%;
 }
 .search{
-    padding:3px 10px;
-    border:solid 3px var(--lgray);
-    border-radius:15px;
+    padding:4px 10px;
+    border:solid 4px var(--lgray);
+    border-radius:20px;
 }
 .arrowup {
     width: 0;
@@ -258,9 +281,9 @@ button{
     background-color:white;
     width:29vw;
     border-radius:5px;
-    left:-11vw;
-    max-height:80vh;
-    overflow-y:scroll;
+    right:20vw  ;
+    max-height:65vh;
+    overflow:hidden;
     z-index: 5;
 }
 .shadowleft{/*
@@ -269,8 +292,15 @@ button{
     box-shadow: -3px 0px 5px 0px var(--lgray);*/
 }
 .ordercont{
-    max-height:100%;
+    max-height:30vh;
     overflow-y:scroll;
+}
+.mrpadding{
+    padding-right:15px;
+}
+.lrpadding{
+    padding-right:30px;
+
 }
 .mtpadding{
     padding-top:15px;
@@ -282,4 +312,17 @@ button{
     padding:5px;
     border:solid 3px var(--lgray);
     border-radius:5px;
+}
+.dfont{
+    color:var(--dgray);
+}
+.disabled{
+    color:var(--lgray);
+}
+.red{
+    background-color:var(--outline);
+    color:white;
+}
+.mtmargin{
+    margin-top:10px;
 }

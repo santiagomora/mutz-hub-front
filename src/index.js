@@ -1,13 +1,18 @@
 import React from 'react';
+import {BrowserRouter as Router} from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import AppRouting from './main/AppRouting.jsx';
+import AppControl from './main/AppControl.jsx';
 import * as serviceWorker from './serviceWorker';
 import bootstrap from 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import 'react-table-v6/react-table.css'
 
 ReactDOM.render(
-    <AppRouting/>,
+    <Router
+        basename='/'>
+        <AppControl/>
+    </Router>,
     document.getElementById('root')
 );
 

@@ -3,47 +3,47 @@ import React, {
 } from 'react';
 import ReactDOM from 'react-dom';
 
-import DisplaysErrors from '../../hocs/DisplaysErrors';
-
-const noMemoPassword = (props) => {
-    const hasError = props.hasError;
+export default function Password({
+    title,
+    name,
+    rows,
+    readOnly,
+    holder,
+    value,
+    changeHandler,
+    errors
+}){
     return (
-        <div className="full-width">
-            <h6 className="highlight m-font">
-                {props.titulo}
+        <div className="wfull">
+            <h6 className="bolder">
+                {title}
             </h6>
-            <div className={
-                hasError
-                    ? "light-input error-box error"
-                    : "light-input "
-                }>
+            <div>
                 <input type="password"
-                    name={props.name}
-                    placeholder={props.holder}
-                    className={
-                        hasError && props.value !==''
-                            ? "full-width box-transparent error"
-                            : "full-width box-transparent"
-                    }
-                    autoComplete="off"
-                    onChange={props.changeHandler}
-                    value={props.value}
-                    needsvalue={1}/>
+                    name={name}
+                    placeholder={holder}
+                    className="wfull text"
+                    onChange={changeHandler}
+                    value={value}/>
+            </div>
+            <div>
+                {
+                    (errors||[]).length>0
+                    ?
+                        errors.map(
+                            (e,i) => {
+                                return (
+                                    <div key={i}
+                                        className="bolder"
+                                        style={{color:"var(--danger)"}}>
+                                        {e}
+                                    </div>
+                                )
+                            }
+                        )
+                    : ""
+                }
             </div>
         </div>
     );
 }
-
-
-const MemoPassword = React.memo(noMemoPassword);
-
-export const Password = (props) => (
-    <DisplaysErrors errors = {props.errors}>
-        <MemoPassword rows={props.rows}
-            titulo={props.titulo}
-            holder={props.holder}
-            name={props.name}
-            value={props.value}
-            changeHandler={props.changeHandler}/>
-    </DisplaysErrors>
-)

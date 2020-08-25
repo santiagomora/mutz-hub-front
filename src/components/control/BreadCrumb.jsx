@@ -1,94 +1,129 @@
-import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import React, {
+    Component
+} from 'react';
+import {
+    Link
+} from 'react-router-dom';
+import {
+    OrderBanner
+} from '../hocs/OrderVisualization.jsx';
 
 const crumbs = {
     shops:{
         section:"shops",
-        title:"Choose your shop",
-        link:(id) => "/shops",
+        reg:/\//,
+        title: (paint) => (
+            <>
+                <h3 className={`subalign iblock shmargin ${paint}`}>
+                    1.
+                </h3>
+                    Choose your shop
+            </>
+        ),
+        link:(id) => "/",
         width:"34%",
         paint:["shops"]
     },
-    order:{
-        section:"order",
-        title:"Place your order",
-        link:(id) => `/order/${id}`,
+    menu:{
+        section:"menu",
+        reg:/\/menu\/[0-9]+/,
+        title:(paint) => (
+            <>
+                <h3 className={`subalign iblock shmargin ${paint}`}>
+                    2.
+                </h3>
+                Take a look at the menu
+            </>
+        ),
+        link:(id) => `/menu/${id}`,
         width:"67%",
-        paint:["shops","order"]
+        paint:["shops","menu"]
     },
     checkout: {
         section:"checkout",
-        title:"Verify your order",
+        reg:/\/checkout/,
+        title:(paint) => (
+            <>
+                <h3 className={`subalign iblock shmargin ${paint}`}>
+                    3.
+                </h3>
+                Verify your order
+            </>
+        ),
         link:(id) => "/checkout",
         width:"100%",
-        paint:["shops","order","checkout"]
+        paint:["shops","menu","checkout"]
     }
 };
 
 const getCrumbs =
     current => Object.values(crumbs).map(
-        e => e.section === current ? {disable:true,...e} : e
+        e => !current.match( e.reg ) ? {disable:true,...e} : e
     );
 
-export default class BreadCrumb extends Component {
-    constructor(props){
-        super(props)
-    }
+export default function BreadCrumb({
+    hideBanner,
+    location,
+    current,
+    state,
+    toggleItem,
+    displayOrder
+}){
+    let stored = '',
+        display = null;
+    const items = getCrumbs(current),
+        curr = crumbs[current]||{},
+        order = state.order||{},
+        hasOrder = (order.items||[]).length>0;
 
-    render (){
-        let stored = '',
-            display = null;
-        const props = this.props,
-            items = getCrumbs(props.current),
-            curr = crumbs[props.current],
-            location = props.location,
-            order = location.order||{},
-            hasOrder = (order.items||[]).length>0;
-        return (
-            <>
-                <div className="container-fluid">
-                    <div className="row mvpadding">
-                    {
-                        items.map(
-                            (e,i) => {
-                                const isEnabled = curr.paint.indexOf(e.section) === -1,
-                                    paint = hasOrder||!isEnabled
-                                        ? {color:"var(--main)"}
-                                        : {color:"lightgray"}
-                                return (
-                                    <div
-                                        key={i}
-                                        className="col-md-4 aligncenter">
-                                    {
-                                        hasOrder||!isEnabled
-                                        ?
-                                            <Link to={{
-                                                pathname:e.link((location.shop||{}).id),
-                                                state:location
-                                            }}>
-                                                <span
-                                                    className="bolder"
-                                                    style={paint}>
-                                                    {e.title}
-                                                </span>
-                                            </Link>
-                                        :
-                                            <>
-                                                <span
-                                                    className="bolder"
-                                                    style={paint}>
-                                                    {e.title}
-                                                </span>
-                                            </>
-                                    }
-                                    </div>
-                                );
+    return (
+        <div className="container-fluid">
+            <div className="row">
+            {
+                items.map(
+                    (e,i) => {
+                        const isEnabled = (curr.paint||[]).indexOf(e.section) === -1,
+                            paint = hasOrder||!isEnabled
+                                ? "selected bolder"
+                                : "disabled bolder"
+                        return (
+                            <div
+                                key={i}
+                                className="col-md-3">
+                            {
+                                hasOrder||!isEnabled
+                                ?
+                                    <Link to={{
+                                        pathname:e.link((state.shop||{}).id),
+                                        state
+                                    }}>
+                                        <span className={paint}>
+                                            {e.title(paint)}
+                                        </span>
+                                    </Link>
+                                :
+                                    <>
+                                        <span
+                                            className={paint}>
+                                            {e.title(paint)}
+                                        </span>
+                                    </>
                             }
-                        )
+                            </div>
+                        );
                     }
-                    </div>
+                )
+            }
+                <div className={
+                    hideBanner
+                        ? "hidden"
+                        : "col-md-3 alignright"}>
+                    <OrderBanner
+                        state={state}
+                        toggleItem={toggleItem}
+                        displayOrder={displayOrder}/>
                 </div>
-            </>
-        )
-    };
+            </div>
+        </div>
+    );
 }

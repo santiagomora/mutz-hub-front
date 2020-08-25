@@ -8,7 +8,23 @@ import {
 
 import LoadingComponent from './LoadingComponent.jsx';
 
+function RenderChildren({data,props}){
+    return(
+        <LoadingComponent data={data}>
+        {
+            React.cloneElement(
+                props.children,{
+                    ...props,
+                    data
+                }
+            )
+        }
+        </LoadingComponent>
+    )
+}
+
 export default class DataHandler extends Component {
+
     constructor(props){
         super(props);
         this.state={data:null}
@@ -19,8 +35,7 @@ export default class DataHandler extends Component {
         let req;
         if ( props.endpoint )
             req = GET({
-                    endpoint:props.endpoint,
-                    data:{}
+                    url:props.endpoint
                 })
                 .then( res => {
                     this.setState({data:res.data})
@@ -28,24 +43,14 @@ export default class DataHandler extends Component {
                 .catch( err =>{
                     console.log(err);
                 });
-        else this.setState({data:true})
     }
 
     render(){
-        const props = this.props;
+        const data = this.props.endpoint ? this.state.data : true;
         return (
-            <>
-                <LoadingComponent data={this.state.data}>
-                {
-                    React.cloneElement(
-                        this.props.children,{
-                            ...this.props,
-                            data:this.state.data
-                        }
-                    )
-                }
-                </LoadingComponent>
-            </>
+            <RenderChildren
+                data={data}
+                props={this.props}/>
         )
     }
 }

@@ -1,35 +1,42 @@
 import axios from 'axios';
 
-export const BASE_URL = 'http://localhost:8000';
+export const BASE_URL = 'http://127.0.0.1:8000';
 
 const API_BASE = `${BASE_URL}/api`;
 
 export const GET = (
     options
-) => axios({
+) => {
+    return axios({
         method:'get',
-        url:options.endpoint,
-        timeout: 2000,
+        timeout: 5000,
         baseURL: API_BASE,
+        crossDomain:true,
+        withCredentials:true,
         headers:{
             'Content-type':'application/json',
             'Accept':'application/json'
         },
-    })
+        ...options
+    });
+}
 
 export const POST = (
     options
-) => axios({
+) => {
+    return axios({
         method: 'post',
-        url: options.endpoint,
-        timeout: 1000,
-        data:options.data,
+        timeout: 5000,
         baseURL: API_BASE,
+        crossDomain:true,
+        withCredentials:true,
         headers:{
             'Content-type':'application/json',
             'Accept':'application/json'
-        }
+        },
+        ...options
     });
+}
 
 export const DELETE = (
     options
@@ -37,27 +44,31 @@ export const DELETE = (
         method: 'delete',
         url: options.endpoint,
         timeout: 1000,
-        onDownloadProgress:options.download,
-        onUploadProgress:options.upload,
         withCredentials:true,
         baseURL: API_BASE,
+        headers:{
+            'Content-type':'application/json',
+            'Accept':'application/json'
+        },
     });
 
 export const PUT = (
     options
-) => axios({
+) => {
+
+    return axios({
         method: 'put',
-        url: options.endpoint,
-        data:options.data,
-        timeout: 1000,
-        onDownloadProgress:options.download,
-        onUploadProgress:options.upload,
-        withCredentials:true,
+        timeout: 5000,
         baseURL: API_BASE,
+        crossDomain:true,
+        withCredentials:true,
         headers:{
-            'Content-type':'application/json'
-        }
+            'Content-type':'application/json',
+            'Accept':'application/json'
+        },
+        ...options
     });
+}
 
 axios.interceptors.request.use(
     function (config) {

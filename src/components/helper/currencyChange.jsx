@@ -10,6 +10,6 @@ export function currencyChange({
     const name = names[curr-1],
         currentRate = shop === curr
         ? 1
-        : rate[name.toLowerCase()];
+        : rate[name];
     return [name,Math.round(price*currentRate*100)/100];
 }

@@ -1,44 +1,76 @@
-/**
- * react basic
- */
 import React, {
     Component
 } from 'react';
 import {
-    BrowserRouter as Router,
-    Route
+    Switch,
+    Route,
+    withRouter
 } from 'react-router-dom';
-import ReactDOM from 'react-dom';
+import {
+    saveHistory
+}from '../components/helper/saveHistory.jsx';
 
-//import AuthControl from './AuthControl.jsx';
-import OrderRouting from '../orders/OrderRouting.jsx';
-import DashBoard from '../dashboard/DashBoard.jsx';
-import OrderHandler from '../components/hocs/OrderHandler.jsx';
+import AuthRouting from './auth/AuthRouting.jsx';
 
-function AppRouting(props){
-    return(
-        <Router
-            basename='/'>
-            <Route
-                path='/'
-                render={
-                    (match) => (
-                        <OrderHandler {...match}>
-                            <OrderRouting {...match} />
-                        </OrderHandler>
-                    )
-                }/>
-            <Route
-                path='/dashboard'
-                exact
-                render={
-                    (match) => (
-                        <DashBoard
-                            {...match}/>
-                    )
-                }/>
-        </Router>
-    );
+import OrderRouting from './orders/OrderRouting.jsx';
+
+import DashboardRouting from './dashboard/DashboardRouting.jsx';
+
+import Protected from '../components/hocs/Protected.jsx';
+
+class AppRouting extends Component{
+    constructor(props){
+        super(props);
+        this.saveHistory = saveHistory.bind(this);
+    }
+
+    render(){
+        const props = this.props;
+        return(
+            <Switch>
+                <Route
+                    path={`${props.match.url}auth`}
+                    render={
+                        (match) => {
+                            return(
+                                <Protected
+                                    condition={props.auth}
+                                    redirect="/dashboard">
+                                    <AuthRouting
+                                        authenticate={props.authenticate}
+                                        auth={props.auth}{...match}/>
+                                </Protected>
+                        )}
+                    }/>
+                <Route
+                    path={`${props.match.url}dashboard`}
+                    render={
+                        (match) => (
+                            <Protected
+                                redirect="/auth"
+                                condition={!props.auth}>
+                                <DashboardRouting
+                                    save={this.saveHistory}
+                                    user={props.user}
+                                    {...match}/>
+                            </Protected>
+                        )
+                    }/>
+                <Route
+                    path={`${props.match.url}`}
+                    component={
+                        (match) =>{
+                            return (
+                                <OrderRouting
+                                    save={this.saveHistory}
+                                    {...match}/>
+                            )
+                        }
+                    }/>
+            </Switch>
+        );
+    }
+
 }
 
-export default AppRouting;
+export default withRouter( AppRouting );

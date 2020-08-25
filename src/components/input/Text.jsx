@@ -5,7 +5,6 @@ export default function Text ({
     title,
     name,
     rows,
-    readOnly,
     holder,
     value,
     changeHandler,
@@ -17,13 +16,12 @@ export default function Text ({
                 {title}
             </h6>
             <div>
-                <textarea name={name}
-                    rows={rows}
-                    readOnly = {readOnly}
+                <input name={name}
+                    type="text"
                     className="wfull text"
                     placeholder={holder}
                     onChange={changeHandler}
-                    value={value}
+                    value={value||""}
                     autoComplete="on"/>
             </div>
             <div>

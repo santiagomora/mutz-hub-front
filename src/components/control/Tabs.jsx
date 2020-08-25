@@ -1,8 +1,11 @@
-import React, {useState} from 'react';
-import ReactDOM from 'react-dom';
+import React, {
+    useState
+} from 'react';
 import {
     DisplayGrid
-} from "../helper/gridRender.jsx";
+} from '../../components/grid/DisplayGrid.jsx';
+
+import ReactDOM from 'react-dom';
 
 const filter = (data,term) => {
     return data.filter(
@@ -26,28 +29,27 @@ export default function Tabs(props) {
         }
     return (
         <div className="container-fluid nopadding">
-            <div className="grayline mvmargin row"></div>
             <div className="row container-fluid nopadding" style={{margin:"0px"}}>
                 {
                     Object.keys(props.data).map(
                         (e,i) => {
                             return (
-                                    <div
-                                        key={i}
-                                        className="col-md-3 alignleft nopadding aligncenter">
-                                        <button
-                                            onClick={clickTab}
-                                            className="nopadding"
-                                            value={e}>
-                                            <h4 className={
-                                                e === tab
-                                                    ? "bolder nomargin"
-                                                    : "bolder nomargin light"
-                                                }>
-                                                    {e}
-                                            </h4>
-                                        </button>
-                                    </div>
+                                <div
+                                    key={i}
+                                    className="col-md-3 alignleft nopadding">
+                                    <button
+                                        onClick={clickTab}
+                                        className="nopadding mtmargin"
+                                        value={e}>
+                                        <h4 className={
+                                            e === tab
+                                                ? "bolder nomargin"
+                                                : "bolder nomargin light"
+                                            }>
+                                                {e}
+                                        </h4>
+                                    </button>
+                                </div>
                             )
                         }
                     )
@@ -61,7 +63,7 @@ export default function Tabs(props) {
                         className="search wfull"/>
                 </div>
             </div>
-            <div className="grayline mvmargin row"></div>
+            <div style={{marginTop:"15px"}} className="grayline row"></div>
             <div
                 className="row container-fluid nopadding"
                 style={{margin:"0px"}}>
@@ -81,14 +83,14 @@ export default function Tabs(props) {
                                             className="container-fluid alignleft"
                                             style={{padding:"15px 0px"}}>
                                             {
-                                                DisplayGrid(
-                                                    filter(props.data[e],search),
-                                                    props.grid.elem({
-                                                        shop:props.shop,
+                                                DisplayGrid({
+                                                    data:filter(props.data[e],search),
+                                                    GridElement:props.grid.elem({
                                                         clickHandler:props.clickHandler
                                                     }),
-                                                    props.grid.columns
-                                                )
+                                                    extra:props.grid.extra,
+                                                    colNum:props.grid.columns
+                                                })
                                             }
                                         </div>
                                     </div>

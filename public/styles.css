@@ -1,0 +1,397 @@
+:root{
+    --main:#22b295;
+    --outline:#b2223f;
+    --lgray:lightgray;
+    --dgray:darkslategray;
+}
+.block{
+    display:block;
+}
+body,div,li,button{
+    font-family: 'Nunito', sans-serif !important;
+    color:var(--dgray);
+}
+.app-header{
+    background-color: var(--main);
+    height:50vh;
+}
+
+.mtmargin{
+    margin-top:15px;
+}
+.mhpadding{
+    margin-right:15px;
+    margin-left:15px;
+}
+.sbpadding{
+    padding-bottom:5px;
+}
+.svpadding{
+    padding-bottom:5px;
+    padding-top:5px;
+}
+.amargin{
+    margin:auto;
+}
+a:hover{
+    text-decoration:none!important;
+}
+
+.hlist{
+    list-decoration:none;
+}
+
+.bolder{
+    font-weight:bolder;
+}
+
+.hlist > li {
+    display:inline-block;
+    width:33.3333%;
+}
+
+.nomargin{
+    margin:0px;
+}
+
+.secondary-line{
+    height:5px;
+    border:solid 1px var(--main);
+    background-color:var(--main);
+    border-radius:3px;
+}
+
+.grayline{
+    height:4px;
+    border:solid 1px var(--lgray);
+    background-color:var(--lgray);
+    border-radius:5px;
+}
+.darkline{
+    height:4px;
+    border:solid 1px var(--dgray);
+    background-color:var(--dgray);
+    border-radius:5px;
+}
+.redfont{
+    color:var(--outline);
+}
+.greenline{
+    height:4px;
+    border:solid 1px var(--main);
+    background-color:var(--main);
+    border-radius:5px;
+}
+.greenback{
+    background-color: var(--main) !important;
+
+}
+.nopadding{
+    padding:0px !important;
+}
+
+.app-box{
+    background-color: white;
+    border: solid 1px white;
+    border-radius: 4px;
+    height:500px;
+}
+
+.mvpadding{
+    padding-top:15px;
+    padding-bottom:15px;
+}
+
+.hoverlight:hover{
+    background-color:#f2f2f2 !important;
+}
+
+.stext{
+    font-size:14px;
+}
+
+.alignleft{
+    text-align:left;
+}
+
+.alignright{
+    text-align:right;
+}
+
+.aligncenter{
+    text-align:center;
+}
+
+.smargin{
+    margin:5px;
+}
+
+.minheight{
+    min-height:30vh;
+}
+
+.shmargin{
+    margin-left:5px;
+    margin-right:5px;
+}
+
+.roundborder{
+    border-radius:5px;
+}
+
+.vmiddle{
+    vertical-align: middle !important;
+}
+.subalign{
+    vertical-align: sub !important;
+}
+.mvmargin{
+    margin-top:15px;
+    margin-bottom:15px;
+}
+
+.line{
+    height:5px;
+    border:solid 1px var(--outline);
+    background-color:var(--outline);
+    border-radius:3px;
+}
+
+.move-down{
+    margin-top:5vh;
+}
+
+.app-title{
+    color:var(--main);
+    font-weight:bold;
+    text-shadow: 2px 0 0 var(--outline),
+        -2px 0 0 var(--outline),
+        0 2px 0 var(--outline),
+        0 -2px 0 var(--outline),
+        1px 1px var(--outline),
+        -1px -1px 0 var(--outline),
+        1px -1px 0 var(--outline),
+        -1px 1px 0 var(--outline);
+}
+.circle,.radio{
+    border-radius:50%;
+    height:15px;
+    width:15px;
+    border:none;
+    display:inline;
+    vertical-align: top;
+}
+.combo{
+    border-radius:2px;
+    height:15px;
+    width:15px;
+    border:none;
+    display:inline;
+    vertical-align: top;
+}
+.iblock{
+    display:inline-block;
+}
+
+.toggle{
+    height:15px;
+    width:30px;
+    border:solid 2px var(--dgray);
+    box-sizing: content-box;
+    padding:1px;
+    border-radius:20px;
+    vertical-align: middle;
+}
+.selected{
+    font-weight:bolder;
+    color:var(--main);
+}
+.light{
+    color:var(--lgray);
+}
+
+.dark{
+    color:var(--dgray);
+}
+.hidden{
+    display:none;
+}
+button{
+    background-color:transparent;
+    border:transparent;
+}
+.button{
+    background-color:var(--dgray);
+    color:white;
+    border-radius:15px;
+    padding: 3px 10px;
+}
+.variation{
+    background-color:var(--lgray);
+    color:var(--dgray);
+    border-radius:15px;
+    padding: 3px 10px;
+}
+.justify{
+    text-align:justify;
+}
+.red{
+    color:var(--outline);
+}
+
+.spadding{
+    padding:5px;
+}
+.mpadding{
+    padding:15px;
+}
+.wfull{
+    width:100%;
+}
+.gborder{
+    border:solid 3px var(--lgray);
+    border-radius:5px;
+}
+.mborder{
+    border:solid 3px var(--main);
+    border-radius:5px;
+}
+.mback{
+    background-color:var(--main);
+}
+.gback{
+    background-color:var(--lgray);
+}
+.ten{
+    width:10%;
+}
+.ninety{
+    width:93%;
+}
+.fifty{
+    width:50%;
+}
+.search{
+    padding:4px 10px;
+    border:solid 4px var(--lgray);
+    border-radius:20px;
+}
+.arrowup {
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 15px solid var(--lgray);
+}
+
+.absolute{
+    position:absolute;
+}
+.relative{
+    position:relative;
+}
+.preview{
+    background-color:white;
+    width:29vw;
+    border-radius:5px;
+    right:20vw  ;
+    max-height:70vh;
+    overflow:hidden;
+    z-index: 5;
+}
+.shadowleft{/*
+    -webkit-box-shadow: -3px 0px 5px 0px var(--lgray);
+    -moz-box-shadow: -3px 0px 5px 0px var(--lgray);
+    box-shadow: -3px 0px 5px 0px var(--lgray);*/
+}
+.ordercont{
+    max-height:42vh;
+    overflow-y:scroll;
+}
+.mrpadding{
+    padding-right:15px;
+}
+.lrpadding{
+    padding-right:30px;
+
+}
+.mtpadding{
+    padding-top:15px;
+}
+.stpadding{
+    padding-top:5px;
+}
+.text{
+    padding:5px;
+    border:solid 3px var(--lgray);
+    border-radius:5px;
+}
+.dfont{
+    color:var(--dgray);
+}
+.disabled{
+    color:var(--lgray);
+}
+.red{
+    background-color:var(--outline);
+    color:white;
+}
+.mtmargin{
+    margin-top:10px;
+}
+.srmargin{
+    margin-right:5px;
+}
+.sbmargin{
+    margin-bottom:5px;
+}
+.mbmargin{
+    margin-bottom:10px;
+}
+.stmargin{
+    margin-top:5px;
+}
+.shopheader{
+    background-color:#f2f2f2;
+    padding: 20px 10px;
+    border-radius:5px;
+    margin-bottom:20px;
+}
+.svmargin{
+    margin-top:5px;
+    margin-bottom:5px;
+}
+.mbpadding{
+    padding-bottom:10px;
+}
+.vlist{
+    white-space: normal;
+    padding:0px;
+    margin:0px;
+}
+.break{
+    white-space: normal;
+
+}
+.rt-thead, .rt-th, .-header,.ReactTable,.pagination-bottom,.-pagination{
+    box-shadow: none !important;
+    border:none !important;
+}
+
+.rt-thead{
+    background-color:#f2f2f2;
+    border-radius:5px;
+}
+.-previous .-btn{
+    padding:5px;
+    font-weight:bolder;
+    text-align:left;
+    background-color:transparent !important;
+}
+
+.-next .-btn{
+    padding:5px;
+    font-weight:bolder;
+    text-align:right;
+    background-color:transparent !important;
+}

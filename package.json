@@ -20,7 +20,7 @@
     "react-table-v6": "^6.8.6"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npx serve build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "watch": "npm-watch",

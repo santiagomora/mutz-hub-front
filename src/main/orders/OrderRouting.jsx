@@ -6,6 +6,11 @@ import {
     Switch,
     withRouter
 } from 'react-router-dom';
+import{
+    storage
+} from '../../helper/helperIndex.jsx';
+
+import Protected from '../../components/composition/Protected.jsx';
 
 import OrderForm from './menu/OrderForm.jsx'
 
@@ -40,11 +45,15 @@ function OrderRouting (props) {
                 path={`${props.match.url}menu/:id`}
                 render={
                     ({match}) => (
-                        <OrderForm
-                            {...match}
-                            {...props}
-                            params={match.params}
-                            requestOnMount/>
+                        <Protected
+                            redirect="/"
+                            condition={!storage.get('shop')}>
+                            <OrderForm
+                                {...match}
+                                {...props}
+                                params={match.params}
+                                requestOnMount/>
+                        </Protected>
                     )
                 } />
             <Route

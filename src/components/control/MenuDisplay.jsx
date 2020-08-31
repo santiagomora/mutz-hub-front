@@ -71,6 +71,9 @@ export default function MenuDisplay(props) {
                             )
                         }
                         <div className="mvpadding">
+                            <h4 className="bolder">Search</h4>
+                            <div className="secondary-line mbmargin"></div>
+                            <p> start typing to search in the current category </p>
                             <input
                                 type="text"
                                 value={search}

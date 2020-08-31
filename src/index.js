@@ -1,14 +1,19 @@
 import React from 'react';
+import {BrowserRouter as Router} from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import Control from './main/Control.jsx';
 import * as serviceWorker from './serviceWorker';
+import bootstrap from 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import 'react-table-v6/react-table.css'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <Router
+        basename='/'>
+        <Control requestOnMount/>
+    </Router>,
+    document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

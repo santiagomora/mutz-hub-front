@@ -1,27 +1,27 @@
 import React from 'react';
 
-export default function Password({
+export default function Text ({
     title,
     name,
     rows,
-    readOnly,
     holder,
     value,
     changeHandler,
     errors
-}){
+}) {
     return (
         <div className="wfull">
             <h6 className="bolder">
                 {title}
             </h6>
             <div>
-                <input type="password"
-                    name={name}
-                    placeholder={holder}
+                <input name={name}
+                    type="text"
                     className="wfull text"
+                    placeholder={holder}
                     onChange={changeHandler}
-                    value={value}/>
+                    value={value||""}
+                    autoComplete="on"/>
             </div>
             <div>
                 {

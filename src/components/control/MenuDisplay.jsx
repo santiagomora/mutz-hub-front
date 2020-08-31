@@ -71,6 +71,9 @@ export default function MenuDisplay(props) {
                             )
                         }
                         <div className="mvpadding">
+                            <h4 className="bolder">Search</h4>
+                            <div className="secondary-line mbmargin"></div>
+                            <p> start typing to search in the current category </p>
                             <input
                                 type="text"
                                 value={search}
@@ -113,7 +116,6 @@ export default function MenuDisplay(props) {
 }
 
 /*
-
 <div className="col-md-3 nopadding">
 </div>
 </div>
@@ -135,7 +137,6 @@ style={{margin:"0px"}}>
                         <div
                             className="container-fluid alignleft"
                             style={{padding:"15px 0px"}}>
-
                         </div>
                     </div>
             )

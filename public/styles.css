@@ -4,6 +4,9 @@
     --lgray:lightgray;
     --dgray:darkslategray;
 }
+.block{
+    display:block;
+}
 body,div,li,button{
     font-family: 'Nunito', sans-serif !important;
     color:var(--dgray);
@@ -23,7 +26,11 @@ body,div,li,button{
 .sbpadding{
     padding-bottom:5px;
 }
-.mtmargin{
+.svpadding{
+    padding-bottom:5px;
+    padding-top:5px;
+}
+.amargin{
     margin:auto;
 }
 a:hover{
@@ -60,6 +67,12 @@ a:hover{
     background-color:var(--lgray);
     border-radius:5px;
 }
+.darkline{
+    height:4px;
+    border:solid 1px var(--dgray);
+    background-color:var(--dgray);
+    border-radius:5px;
+}
 .redfont{
     color:var(--outline);
 }
@@ -90,7 +103,7 @@ a:hover{
 }
 
 .hoverlight:hover{
-    border-color:var(--lgray) !important;
+    background-color:#f2f2f2 !important;
 }
 
 .stext{
@@ -282,7 +295,7 @@ button{
     width:29vw;
     border-radius:5px;
     right:20vw  ;
-    max-height:65vh;
+    max-height:70vh;
     overflow:hidden;
     z-index: 5;
 }
@@ -292,7 +305,7 @@ button{
     box-shadow: -3px 0px 5px 0px var(--lgray);*/
 }
 .ordercont{
-    max-height:30vh;
+    max-height:42vh;
     overflow-y:scroll;
 }
 .mrpadding{
@@ -325,4 +338,60 @@ button{
 }
 .mtmargin{
     margin-top:10px;
+}
+.srmargin{
+    margin-right:5px;
+}
+.sbmargin{
+    margin-bottom:5px;
+}
+.mbmargin{
+    margin-bottom:10px;
+}
+.stmargin{
+    margin-top:5px;
+}
+.shopheader{
+    background-color:#f2f2f2;
+    padding: 20px 10px;
+    border-radius:5px;
+    margin-bottom:20px;
+}
+.svmargin{
+    margin-top:5px;
+    margin-bottom:5px;
+}
+.mbpadding{
+    padding-bottom:10px;
+}
+.vlist{
+    white-space: normal;
+    padding:0px;
+    margin:0px;
+}
+.break{
+    white-space: normal;
+
+}
+.rt-thead, .rt-th, .-header,.ReactTable,.pagination-bottom,.-pagination{
+    box-shadow: none !important;
+    border:none !important;
+}
+
+.rt-thead{
+    background-color:#f2f2f2;
+    border-radius:5px;
+}
+.-previous .-btn{
+    padding:5px;
+    font-weight:bolder;
+    text-align:left;
+    background-color:transparent !important;
+}
+
+.-next .-btn{
+    padding:5px;
+    font-weight:bolder;
+    text-align:right;
+    background-color:transparent !important;
 }

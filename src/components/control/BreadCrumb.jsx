@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import {
     OrderBanner
-} from '../hocs/OrderVisualization.jsx';
+} from '../control/OrderVisualization.jsx';
 
 const crumbs = {
     shops:{
@@ -66,11 +66,9 @@ export default function BreadCrumb({
     location,
     current,
     state,
-    toggleItem,
-    displayOrder
+    toggleItem
 }){
-    let stored = '',
-        display = null;
+    let stored = '';
     const items = getCrumbs(current),
         curr = crumbs[current]||{},
         order = state.order||{},
@@ -94,8 +92,7 @@ export default function BreadCrumb({
                                 hasOrder||!isEnabled
                                 ?
                                     <Link to={{
-                                        pathname:e.link((state.shop||{}).id),
-                                        state
+                                        pathname:e.link((state.shop||{}).id)
                                     }}>
                                         <span className={paint}>
                                             {e.title(paint)}
@@ -114,14 +111,11 @@ export default function BreadCrumb({
                     }
                 )
             }
-                <div className={
-                    hideBanner
-                        ? "hidden"
-                        : "col-md-3 alignright"}>
+                <div className="col-md-3 alignright">
                     <OrderBanner
+                        hideBanner={hideBanner}
                         state={state}
-                        toggleItem={toggleItem}
-                        displayOrder={displayOrder}/>
+                        toggleItem={toggleItem}/>
                 </div>
             </div>
         </div>

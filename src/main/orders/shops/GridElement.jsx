@@ -5,70 +5,83 @@ import {
 } from 'react-router-dom';
 import  ReactDOM from 'react-dom';
 import {
-    BASE_URL
-} from '../../../components/api.jsx';
+    RESOURCE_URL
+} from '../../../utils/api.jsx';
+import {
+    round
+} from '../../../helper/helperIndex.jsx'
 
 export const COLUMNS = 3;
+
+const WIDTH = "100px";
 
 export function GridElement({
     data,
     extra,
     cols
 }){
-    const {names,curr,rate} = extra.change,
-          currentName = names[curr-1],
-          currentRate = data.currency === curr
-                ? 1
-                : rate[currentName];
+    const {convert,change} = extra,
+        {tag,curr,names} = change,
+        clickHandler = (data) => {
+            return e => {
+                e.preventDefault();
+                extra.click(data);
+            }
+        },
+        cat = Object.keys(data.stats);
     return (
         <div
             key={data.id}
-            className={`hoverlight roundborder mvpadding col-md-${12/COLUMNS}`}
-            style={{border:"solid 4px transparent"}}>
-            <Link to={{
-                    pathname:`/menu/${data.id}`,
-                    state:{
-                        ...extra,
-                        shop:{
-                            id:             data.id,
-                            name:           data.name,
-                            description:    data.description,
-                            extras:         data.extras,
-                            currency:       data.currency,
-                            pic:            data.pic
-                        }
-                    }
-                }}>
-                <h5 className="bolder" style={{color:"var(--outline)"}}>
+            className={`hoverlight roundborder col-md-${12/cols} nomargin`}>
+            <button onClick={clickHandler(data)} className="wfull amargin block mhpadding mvpadding">
+                <h5 className="bolder alignleft redfont">
                     {data.name}
                 </h5>
-                <img width="100px" height="100px" src={`${BASE_URL}${data.pic}`}/>
-                <div className="bolder">
-                    currency:
-                    <span className="shmargin" style={{color:"var(--main)"}}>
+                <div className="grayline svmargin"></div>
+                <div className="stext shmargin mbmargin alignright">
+                    <span className="bolder">
+                        base currency:
+                    </span>
+                    <span className="selected shmargin">
                         {names[data.currency-1]}
                     </span>
                 </div>
-                <div>
+                <img width={WIDTH} src={`${RESOURCE_URL}${data.pic}`}/>
+                <div className="alignleft stmargin">
+                    <span className="bolder">shipping:</span>
+                    <span>{`${convert(data.currency,data.shipping)}`}</span>
+                    <span className="selected shmargin">
+                        {tag}
+                    </span>
+                </div>
+                <div className="alignleft">
                     {data.description}
                 </div>
-                <div className="grayline mvmargin"></div>
-                <div>
-                {
-                    Object.keys(data.stats).map(
-                        (d,i) => (
-                            <div key={i} className="stext">
-                                {`${data.stats[d].cnt} different ${d},`}
-                                <span className="bolder stext shmargin">
-                                    {`${Math.round(data.stats[d].avg*currentRate*100)/100} ${currentName}`}
-                                </span>
-                                average
-                            </div>
+                <div className="container-fluid nopadding mtmargin">
+                    <div className="row">
+                    {
+                        cat.map(
+                            (d,i) => (
+                                <div
+                                    className={`col-md-${12/cat.length}`}
+                                    key={i}>
+                                    <div className="bolder variation nopadding stext">
+                                        {`${data.stats[d].cnt} ${d}`}
+                                    </div>
+                                    <div className="bolder stext stmargin">
+                                        {`${convert(data.currency,data.stats[d].avg)}`}
+                                        <span className="selected shmargin">
+                                            {tag}
+                                        </span>
+                                    </div>
+                                    <div className="stext">on average</div>
+                                </div>
+                            )
                         )
-                    )
-                }
+                    }
+                    </div>
                 </div>
-            </Link>
+            </button>
         </div>
     )
 }

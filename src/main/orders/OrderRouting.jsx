@@ -1,4 +1,6 @@
-import React from 'react';
+import React,{
+    useContext
+} from 'react';
 import {
     Route,
     Switch,
@@ -13,44 +15,37 @@ import Checkout from './checkout/Checkout.jsx'
 
 import OrderHandler from '../../components/hocs/OrderHandler.jsx';
 
-import DataHandler from '../../components/hocs/DataHandler.jsx';
-
-import HandleRequest from '../../components/hocs/HandleRequest.jsx';
+import HeaderHandler from '../../components/hocs/HeaderHandler.jsx';
 
 import NotFound from '../../components/NotFound.jsx';
 
-function OrderRoutes (props) {
+import Footer from '../Footer.jsx';
+
+function OrderRouting (props) {
     return (
         <Switch>
             <Route
                 exact
                 path={`${props.match.url}`}
                 render={
-                    (match) => {
-                        return (
-                            <HandleRequest>
-                                <ShopForm
-                                    save={props.save}
-                                    orderState={props.orderState}
-                                    {...match}/>
-                            </HandleRequest>
-                        )
-                    }
+                    (match) => (
+                        <ShopForm
+                            {...match}
+                            {...props}
+                            requestOnMount/>
+                    )
                 } />
             <Route
                 exact
                 path={`${props.match.url}menu/:id`}
                 render={
-                    (match) =>{
-                        return (
-                            <HandleRequest>
-                                <OrderForm
-                                    save={props.save}
-                                    orderState={props.orderState}
-                                    {...match}/>
-                            </HandleRequest>
-                        )
-                    }
+                    ({match}) => (
+                        <OrderForm
+                            {...match}
+                            {...props}
+                            params={match.params}
+                            requestOnMount/>
+                    )
                 } />
             <Route
                 exact
@@ -58,12 +53,12 @@ function OrderRoutes (props) {
                 render={
                     (match) =>{
                         return (
-                            <HandleRequest>
-                                <Checkout
-                                    showButton={false}
-                                    toggleItem={props.toggleItem}
-                                    {...match}/>
-                            </HandleRequest>
+                            <Checkout
+                                {...match}
+                                {...props}
+                                showButton={false}
+                                toggleItem={props.toggleItem}
+                                requestOnMount={false}/>
                         )
                     }
                 }/>
@@ -75,11 +70,4 @@ function OrderRoutes (props) {
     );
 }
 
-export default function OrderRouting( props ){
-    const Routing = withRouter(OrderRoutes);
-    return (
-        <OrderHandler {...props}>
-            <Routing/>
-        </OrderHandler>
-    )
-}
+export default HeaderHandler( OrderHandler( OrderRouting ) );

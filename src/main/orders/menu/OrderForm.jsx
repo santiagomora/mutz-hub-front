@@ -1,5 +1,5 @@
 import React, {
-    Component
+    useState
 } from 'react';
 import ReactDOM from 'react-dom';
 import {
@@ -12,122 +12,96 @@ import {
 } from './GridElement.jsx';
 import{
     BASE_URL
-} from '../../../components/api.jsx';
+} from '../../../utils/api.jsx';
+import {
+    storage,
+} from '../../../helper/helperIndex.jsx';
 
 import Modal from '../../../components/control/Modal.jsx';
 
-import Tabs from '../../../components/control/Tabs.jsx';
+import MenuDisplay from '../../../components/control/MenuDisplay.jsx';
 
 import SelectVariations from './SelectVariations.jsx';
 
-import ConditionalRender from '../../../components/hocs/ConditionalRender.jsx';
+import LoadingComponent from '../../../components/composition/LoadingComponent.jsx';
 
-import LoadingComponent from '../../../components/hocs/LoadingComponent.jsx';
+import RequestHandler from '../../../components/hocs/RequestHandler.jsx';
 
 const WIDTH = 100;
 
 const HEIGHT = 100;
 
-class OrderForm extends Component {
+function OrderForm( props ) {
 
-    constructor(props){
-        super(props);
-        this.state={
+    const [state,changeState] = useState({
             modal:false,
             selected:null,
             items:[],
             data:null
-        }
-        this.toggleModal = this.toggleModal.bind(this);
-    }
+        }),
+        toggleModal = (data) => (
+            e => {
+                const modal = !state.modal;
+                changeState({
+                    modal,
+                    selected:data||state.selected
+                })
+            }
+        ),
+        { shop,display,change,data,convert } = props,
+        {selected} = state;
 
-    toggleModal(data){
-        return e => {
-            const modal = !this.state.modal;
-            this.setState({modal,selected:data||this.state.selected});
-        }
-    }
-
-    componentDidMount(){
-        this._ismounted = true;
-        this.props.performRequest({
-            options:{url:`/menu/${this.props.match.params.id}`},
-            method:'get',
-            successCallback: (res) => {
-                if (this._ismounted)
-                    this.setState({data:res.data})
-            },
-            errorCallback: (err) => console.log(err)
-        });
-    }
-
-    componentWillUnmount(){
-        this._ismounted = false;
-    }
-
-    render(){
-        const props = this.props,
-            { shop,display,change } = props.orderState,
-            selected = this.state.selected;
-
-        return (
-            <>
-                <Modal
-                    show={this.state.modal}>
-                    <SelectVariations
-                        change={change}
-                        saveOrder={props.save}
-                        toggleModal={this.toggleModal()}
-                        selected={selected}/>
-                </Modal>
-                <div className="container-fluid mvpadding">
-                    <div className="row">
-                        <div className="col-md-2">
-                            <img
-                                src={`${BASE_URL}${shop.pic}`}
-                                width={`${WIDTH}px`}
-                                height={`${HEIGHT}px`}/>
-                        </div>
-
-                        <div className="col-md-10 nopadding alignleft">
-                            <h2 className="alignleft bolder">{`${shop.name} menu.`}</h2>
-                            <div>
-                                <h5>{shop.description}</h5>
-                                <p>Click on each menu item to see its variations and extra ingredients.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <LoadingComponent
-                        data={this.state.data}>
-                        <Tabs
-                            first="Pizzas"
-                            shop={shop}
-                            data={this.state.data}
-                            clickHandler={this.toggleModal}
-                            grid={{
-                                elem:GridElement,
-                                columns:display ? COLUMNS-1 : COLUMNS,
-                                extra:props.orderState
-                            }}/>
-                    </LoadingComponent>
-                </div>
-            </>
-        );
-    }
-}
-
-export default function(props){
-    const {shop} = props.orderState;
     return (
-        <ConditionalRender
-            condition={!shop}
-            other={
-                <Redirect to={{
-                    pathname:"/shops",
-                    state:{}
-                }}/>
-            }>
-            <OrderForm {...props}/>
-        </ConditionalRender>
-    )
+        <div className="container-fluid">
+            <Modal
+                show={state.modal}>
+                <SelectVariations
+                    change={change}
+                    saveOrder={props.save}
+                    convert={convert}
+                    toggleModal={toggleModal()}
+                    selected={selected}/>
+            </Modal>
+            <LoadingComponent
+                data={data}>
+                <MenuDisplay
+                    first="Pizzas"
+                    shop={shop}
+                    data={data}
+                    clickHandler={toggleModal}
+                    grid={{
+                        elem:GridElement,
+                        columns:display ? COLUMNS-1 : COLUMNS,
+                        extra:{ shop,display,change,convert }
+                    }}/>
+            </LoadingComponent>
+        </div>
+    );
 }
+
+export default RequestHandler(
+    OrderForm, {
+        options:({id}) => ({
+            url:`menu/${id}`
+        }),
+        method:'get'
+    }
+)
+/*
+
+<div className="row shopheader">
+    <div className="col-md-2">
+        <img
+            src={`${BASE_URL}${shop.pic}`}
+            width={`${WIDTH}px`}
+            height={`${HEIGHT}px`}/>
+    </div>
+    <div className="col-md-10 nopadding alignleft">
+        <h2 className="alignleft bolder">{`${shop.name} menu.`}</h2>
+        <div>
+            <h5>{shop.description}</h5>
+            <p>Click on each menu item to see its variations and extra ingredients.</p>
+        </div>
+    </div>
+</div>
+*/

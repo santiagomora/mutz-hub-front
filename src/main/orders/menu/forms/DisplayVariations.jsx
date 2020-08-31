@@ -1,20 +1,20 @@
 import React, {
     Component
 } from 'react';
-import ReactDOM from 'react-dom';
 import {
     CheckBox
 } from '../../../../components/input/CheckBox.jsx';
 import {
-    currencyChange
-} from '../../../../components/helper/currencyChange.jsx';
+    round
+} from '../../../../helper/helperIndex.jsx';
 
 export default function DisplayVariations({
     variations,
-    change,
     form,
     shop,
-    handler
+    crr,
+    handler,
+    convert
 }){
     return (
         Object.keys(variations).map(
@@ -25,11 +25,6 @@ export default function DisplayVariations({
                         {
                             variations[t].map(
                                 (r,i) => {
-                                    const [crr,pri] =  currencyChange({
-                                        price:r.var_price,
-                                        shop:shop.currency,
-                                        ...change
-                                    });
                                     return(
                                         <CheckBox
                                             key={i}
@@ -46,7 +41,10 @@ export default function DisplayVariations({
                                                     </div>
                                                     <div className="iblock fifty">
                                                         <p className="alignright vmiddle nomargin wfull">
-                                                            <span className="shmargin"><span className="bolder">+</span>{pri}</span>
+                                                            <span className="shmargin">
+                                                                <span className="bolder">+</span>
+                                                                {convert(shop.currency,r.var_price)}
+                                                            </span>
                                                             <span className="selected">{crr}</span>
                                                         </p>
                                                     </div>

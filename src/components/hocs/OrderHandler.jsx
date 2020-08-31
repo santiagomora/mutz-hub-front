@@ -10,24 +10,16 @@ import {
     Toggle
 } from '../../components/input/Toggle.jsx';
 import {
-    GET
-} from '../../components/api.jsx';
-import {
-    saveHistory
-} from '../helper/saveHistory.jsx';
-import {
-    toggleItem
-} from '../helper/toggleItem.jsx';
-import {
-    checkKeys
-} from '../helper/checkKeys.jsx';
+    checkKeys,
+    storage
+} from '../../helper/helperIndex.jsx';
 import {
     OrderPreview
-} from './OrderVisualization.jsx';
+} from '../control/OrderVisualization.jsx';
+
+import ExchangeContext from '../../context/ExchangeContext.jsx';
 
 import BreadCrumb from '../control/BreadCrumb.jsx';
-
-import ConditionalRender from './ConditionalRender.jsx';
 
 const CURRENCY = ["USD","EUR"];
 
@@ -42,96 +34,105 @@ const matchSection =
         e => path.match(sections[e])
     ).pop();
 
-class OrderHandler extends Component {
+export default function OrderHandler( Target,hideBanner ){
 
-    constructor(props){
-        super(props);
-        this.state={};
-        this.displayOrder = this.displayOrder.bind(this);
-        this.toggleItem = toggleItem.bind(this);
-        this.saveOrder = this.saveOrder.bind(this);
-    }
+    return class handler extends Component {
 
-    saveOrder(item){
-        const st = this.props.location.state||{},
-            shop = st.shop,
-            order = st.order||{};
-        let ord = ( checkKeys( order ) )
-            ? {
-                shop:shop,
-                items:[item]
+        constructor(props){
+            super(props);
+            this.state={};
+            this.toggleItem = this.toggleItem.bind(this);
+            this.saveOrder = this.saveOrder.bind(this);
+            this.store = this.store.bind(this);
+        }
+
+        static contextType = ExchangeContext;
+
+        store( name,data ){
+            const {state} = this;
+            state[name] = data;
+            this.setState(
+                state,
+                () => storage.set( name,data )
+            );
+        }
+
+        toggleItem(e){
+            e.preventDefault();
+            let item;
+            const elem = e.currentTarget,
+                index = parseInt(elem.getAttribute("index")),
+                dir = parseInt(elem.getAttribute("value")),
+                {order} = this.state,
+                {items} = order;
+            if (items.length>0){
+                item = items[index];
+                item.quantity+=dir;
+                if (item.quantity === 0){
+                    items.splice(index,1);
+                } else
+                    items[index] = item;
+                order.items = items;
             }
-            : {
-                shop:shop,
-                items: (item.item.shop.id === order.shop.id)
-                ? [
-                    ...order.items,
-                    item
-                ] : [item]
-            };
-        this.props.save({name:'order',data:ord})
-    }
+            this.store('order',order);
+        }
 
-    displayOrder(){
-        const st = this.props.location.state||{},
-            display = !(st.display||false);
-        this.props.save({name:'display',data:display})
-    }
 
-    render(){
-        const {location} = this.props,
-            {pathname} = location,
-            state = location.state||{},
-            {
-                curr,
-                display,
+        saveOrder(item){
+            const {shop,order} = this.state;
+            let ord = ( checkKeys( order||{} ) )
+                ? {
+                    shop:shop,
+                    items:[item]
+                }
+                : {
+                    shop:shop,
+                    items: (item.item.shop.id === order.shop.id)
+                    ? [
+                        ...order.items,
+                        item
+                    ] : [item]
+                };
+            this.store('order',ord);
+        }
+
+        componentDidMount(){
+            const {
                 order,
-                change
-            } = state,
-            hideBanner = pathname.match("checkout");
+                shop
+            } = storage.all(['order','shop']);
+            this.setState({order,shop});
+        }
 
-        return (
-            <div className="container-fluid">
-                <div className="row">
-                    <BreadCrumb
-                        hideBanner={hideBanner}
-                        location={pathname}
-                        current={matchSection(pathname)}
-                        state={state}
-                        toggleItem={this.toggleItem}
-                        displayOrder={this.displayOrder}/>
-                </div>
-                <div className="row">
-                    <div className={
-                        display&&!hideBanner
-                            ? "col-md-8"
-                            : "col-md-12" }
-                        style={{margin:"0px"}}>
-                        {
-                            React.cloneElement(
-                                this.props.children,{
-                                    orderState:state,
-                                    toggleItem:this.toggleItem,
-                                    save:this.saveOrder
-                                }
-                            )
-                        }
+        render(){
+            const {pathname} = this.props.location,
+                {order,shop} = this.state,
+                {change,convert} = this.context,
+                hideBanner = pathname.match('/checkout'),
+                hideCrumbs = pathname.match('/dashboard');
+
+            return (
+                <div className="container-fluid">
+                    <div className={hideCrumbs ? "hidden" : "row"}>
+                        <BreadCrumb
+                            hideBanner={hideBanner}
+                            location={pathname}
+                            current={matchSection(pathname)}
+                            state={{change,shop,order,convert}}
+                            toggleItem={this.toggleItem}/>
                     </div>
-                    <div  className={
-                        display&&!hideBanner
-                            ? "col-md-4 mvpadding shadowleft"
-                            : "hidden"
-                        }>
-                        <OrderPreview
-                            curr={curr}
-                            rate={change}
-                            toggleItem={this.toggleItem}
-                            state={state}/>
+                    <div className="row">
+                        <div className="col-md-12"
+                            style={{margin:"0px"}}>
+                            <Target
+                                toggleItem={this.toggleItem}
+                                save = {this.saveOrder}
+                                {...this.state}
+                                {...this.props}/>
+                        </div>
                     </div>
                 </div>
-            </div>
-        )
+            )
+        }
     }
 }
-
-export default withRouter( OrderHandler );

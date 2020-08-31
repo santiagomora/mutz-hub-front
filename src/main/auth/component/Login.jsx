@@ -1,15 +1,12 @@
 import React, {
-    Component
+    Component,
+    useState
 } from 'react';
-import {
-    login
-} from '../Handlers.jsx';
+import{
+    Link
+} from 'react-router-dom';
 
-import ReactDOM from 'react-dom';
-
-import Link from '../../../components/control/Link.jsx';
-
-import ValidationHandler from '../../../components/hocs/ValidationHandler.jsx';
+import RequestHandler from '../../../components/hocs/RequestHandler.jsx';
 
 import LoginForm from '../form/LoginForm.jsx';
 
@@ -36,14 +33,50 @@ const form ={
     email:""
 }
 
-export default class Login extends Component {
+class Login extends Component {
+
     constructor(props){
         super(props);
         this.state = {
             loading:false,
             error:null
         }
-        this.submit = login.bind(this);
+        this.submit = this.submit.bind(this);
+    }
+
+    submit(form){
+        this.setState(
+            {loading:true},
+            this.props.requestHandler({
+                method:'post',
+                options:() => ({
+                    url:"/auth/client/login",
+                    data:form
+                }),
+                onSuccess:(
+                    res => {
+                        this.setState(
+                            {loading:false},
+                            () => {
+                                const {user} = res.data;
+                                if (user){
+                                    this.props.authenticate(
+                                        user,
+                                        () => this.props.history.push('/dashboard')
+                                    );
+                                }
+                            }
+                        )
+                    }
+                ),
+                onError: (err) => {
+                    this.setState({
+                        loading:false,
+                        error:"invalid email or password."
+                    })
+                }
+            })
+        )
     }
 
     render(){
@@ -74,18 +107,17 @@ export default class Login extends Component {
                 </div>
                 <div className="row justify-content-center">
                     <div className="col-md-6 nopadding">
-                        <ValidationHandler
+                        <LoginForm
                             submit={this.submit}
                             fieldDisplay={fieldDisplay}
                             validation={validation}
-                            form = {form}>
-                            <LoginForm
-                                location={location.state}
-                                loading={this.state.loading}/>
-                        </ValidationHandler>
+                            form = {form}
+                            loading={this.state.loading}/>
                     </div>
                 </div>
             </div>
         )
     }
 }
+
+export default RequestHandler( Login );

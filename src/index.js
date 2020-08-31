@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter as Router} from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import AppControl from './main/AppControl.jsx';
+import Control from './main/Control.jsx';
 import * as serviceWorker from './serviceWorker';
 import bootstrap from 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -11,7 +11,7 @@ import 'react-table-v6/react-table.css'
 ReactDOM.render(
     <Router
         basename='/'>
-        <AppControl/>
+        <Control requestOnMount/>
     </Router>,
     document.getElementById('root')
 );

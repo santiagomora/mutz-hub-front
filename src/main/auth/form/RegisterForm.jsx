@@ -1,9 +1,9 @@
 import React, {
     Component
 } from 'react';
-import ReactDOM from 'react-dom';
-
-import Link from '../../../components/control/Link.jsx';
+import {
+    Link
+} from 'react-router-dom';
 
 import Text from '../../../components/input/Text.jsx';
 
@@ -11,12 +11,13 @@ import Password from '../../../components/input/Password.jsx';
 
 import Loader from 'react-loader-spinner';
 
-export default function ({
+import ValidationHandler from '../../../components/hocs/ValidationHandler.jsx';
+
+function RegisterForm({
     form,
     errors,
     changeText,
     submit,
-    location,
     loading,
     profile
 }){
@@ -111,3 +112,5 @@ export default function ({
         </div>
     );
 }
+
+export default ValidationHandler( RegisterForm )

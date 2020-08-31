@@ -1,17 +1,19 @@
 import React, {
     Component
 } from 'react';
-import ReactDOM from 'react-dom';
+import {
+    Link
+} from 'react-router-dom';
 
-import Link from '../../../components/control/Link.jsx';
+import Loader from 'react-loader-spinner';
 
 import Text from '../../../components/input/Text.jsx';
 
 import Password from '../../../components/input/Password.jsx';
 
-import Loader from 'react-loader-spinner';
+import ValidationHandler from '../../../components/hocs/ValidationHandler.jsx';
 
-export default function ({
+function LoginForm({
     form,
     errors,
     changeText,
@@ -72,3 +74,5 @@ export default function ({
         </form>
     );
 }
+
+export default ValidationHandler( LoginForm )

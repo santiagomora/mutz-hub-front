@@ -2,19 +2,12 @@ import React, {
     Component
 } from 'react';
 import {
-    register
-} from '../Handlers.jsx';
-import {
-    POST
-} from '../../../components/api.jsx';
-
-import ReactDOM from 'react-dom';
-
-import Link from '../../../components/control/Link.jsx'
-
-import ValidationHandler from '../../../components/hocs/ValidationHandler.jsx';
+    Link
+} from 'react-router-dom';
 
 import RegisterForm from '../form/RegisterForm.jsx';
+
+import RequestHandler from '../../../components/hocs/RequestHandler.jsx';
 
 import Loader from 'react-loader-spinner';
 
@@ -59,18 +52,51 @@ const form ={
     cli_email:""
 }
 
-export default class Register extends Component {
+class Register extends Component {
 
     constructor(props){
         super(props);
         this.state = {
             loading:false
         }
-        this.submit = register.bind(this);
+        this.submit = this.submit.bind(this);
+    }
+
+    submit(form){
+        this.setState(
+            {loading:true},
+            this.props.requestHandler({
+                method:'post',
+                options:() => ({
+                    url:"/auth/client/register",
+                    data:form
+                }),
+                onSuccess:(
+                    res => {
+                        this.setState(
+                            {loading:false},
+                            () => {
+                                const {user} = res.data;
+                                if (user)
+                                    this.props.authenticate(
+                                        user,
+                                        () => this.props.history.push('/dashboard')
+                                    );
+                            }
+                        )
+                    }
+                ),
+                onError: (err) => {
+                    this.setState({
+                        loading:false,
+                        error:"invalid data"
+                    })
+                }
+            })
+        )
     }
 
     render(){
-        console.log(this.props)
         const {location} = this.props
         return (
             <div className="container-fluid">
@@ -89,18 +115,17 @@ export default class Register extends Component {
                 </div>
                 <div className="row justify-content-center">
                     <div className="col-md-6 nopadding">
-                        <ValidationHandler
+                        <RegisterForm
                             submit={this.submit}
                             fieldDisplay={fieldDisplay}
                             validation={validation}
-                            form = {form}>
-                            <RegisterForm
-                                location={location.state}
-                                loading={this.state.loading}/>
-                        </ValidationHandler>
+                            form = {form}
+                            loading={this.state.loading}/>
                     </div>
                 </div>
             </div>
         )
     }
 }
+
+export default RequestHandler( Register );

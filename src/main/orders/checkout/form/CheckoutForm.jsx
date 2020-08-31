@@ -3,13 +3,13 @@ import React, {
     useState
 } from 'react';
 
-import ReactDOM from 'react-dom';
-
 import Text from '../../../../components/input/Text.jsx';
 
 import Loader from 'react-loader-spinner';
 
-export default function CheckoutForm({
+import ValidationHandler from '../../../../components/hocs/ValidationHandler.jsx';
+
+function CheckoutForm({
     form,
     errors,
     changeText,
@@ -110,3 +110,5 @@ export default function CheckoutForm({
         </div>
     );
 }
+
+export default ValidationHandler( CheckoutForm )

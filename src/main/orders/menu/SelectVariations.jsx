@@ -6,20 +6,17 @@ import {
     CheckBox
 } from '../../../components/input/CheckBox.jsx';
 import {
-    currencyChange
-} from '../../../components/helper/currencyChange.jsx';
-import {
-    searchItem
-} from '../../../components/helper/searchItem.jsx';
-import {
+    currencyChange,
+    searchItem,
     round
-} from '../../../components/helper/round.jsx';
+} from '../../../helper/helperIndex.jsx';
+import {
+    RESOURCE_URL
+} from '../../../utils/api.jsx';
 
 import DisplayVariations from './forms/DisplayVariations.jsx';
 
 import DisplayExtras from './forms/DisplayExtras.jsx';
-
-const SERVER_URL = 'http://localhost:8000';
 
 const WIDTH = 150;
 
@@ -50,25 +47,23 @@ export default class SelectVariations extends Component {
         const elem = e.currentTarget,
             cat = elem.getAttribute("category"),
             val = parseInt(elem.getAttribute("value")),
-            price = round(parseFloat(elem.getAttribute("price"))),
+            price = round( parseFloat( elem.getAttribute("price") ) ),
             title = elem.getAttribute("title"),
             form = this.state.form,
             vart = form.variations[cat]||{};
-
         if( vart.var_id === val ){
             delete form.variations[cat];
-            form.total -= round(form.quantity*price);
+            form.total -= price;
         } else {
             if (form.variations[cat]){
-                form.total -= round(form.quantity*form.variations[cat].price);
+                form.total -= round(form.variations[cat].price);
             }
             form.variations[cat] = {
                 var_id:val,
                 var_name:title,
                 price
             };
-            form.total += round(form.quantity*price);
-
+            form.total += price;
         }
         this.setState({form});
     }
@@ -85,30 +80,18 @@ export default class SelectVariations extends Component {
 
         if( index>=0 ) {
             form.extras.splice(index,1);
-            form.total -= round(form.quantity*price);
+            form.total -= price;
         } else {
             form.extras.push({
                 id:val,
                 name:title,
                 price
             });
-            form.total += round(form.quantity*price);
+            form.total += price;
         }
         this.setState({form});
     }
 
-    saveOrder(e){
-        e.preventDefault();
-        const selected = this.props.selected,
-            data = selected.data,
-            vari = Object.keys(data.variations)||[];
-        if( Object.keys(this.state.form.variations).length<2&&vari.length>0 )
-            this.setState({error:"You must select a value for each variation. Extras are optional."})
-        else {
-            this.props.toggleModal();
-            this.props.saveOrder(this.state.form);
-        }
-    }
 
     addQuantity(e){
         e.preventDefault();
@@ -116,46 +99,53 @@ export default class SelectVariations extends Component {
             form = this.state.form,
             q = form.quantity;
         if ( q+dir>0 ){
-            form.total += dir*form.total/q;
             form.quantity = q+dir;
             this.setState({form});
         }
     }
 
-    componentDidMount(){
+    saveOrder(e){
+        e.preventDefault();
         const selected = this.props.selected,
             data = selected.data,
-            form = this.state.form;
+            form = this.state.form,
+            vari = Object.keys(data.variations)||[];
+
+        if( Object.keys(this.state.form.variations).length<2&&vari.length>0 )
+            this.setState({error:"You must select a value for each variation. Extras are optional."})
+        else {
+            this.props.toggleModal();
+            this.props.saveOrder(form);
+
+        }
+    }
+
+    componentDidMount(){
+        const {data} = this.props.selected,
+            {form} = this.state;
         form.total = data.base_price;
         this.setState({form});
     }
 
     render(){
         const props = this.props,
-            {selected,change} = props,
+            {selected,change,convert} = props,
+            {names,curr,rate,tag} = change,
             {data,shop} = selected,
-            form = this.state.form,
-            cat = data.category,
-            currentName = change.names[change.curr-1],
-            extras = shop.extras[data.category.name]||[],
-            changeRate = change.rate[currentName] ;
-
-        let price = data.base_price,
-            total = this.state.form.total;
-
-        if (change.curr !== shop.currency){
-            total = total*changeRate;
-            price = price*changeRate;
-        }
+            {form} = this.state,
+            {total} = this.state.form,
+            {extras} = data,
+            currentName = tag,
+            price = data.base_price;
 
         return (
-            <div className="container-fluid">
+            <div className="container-fluid mvpadding">
                 <div className="row">
                     <div className="col-md-10 container-fluid">
                         <div className="row">
                             <div className="col-md-4">
                                 <img
-                                    src={`${SERVER_URL}${data.pic}`}
+                                    src={`${RESOURCE_URL}${data.pic}`}
                                     width={`${WIDTH}px`}
                                     height={`${HEIGHT}px`}/>
                             </div>
@@ -167,7 +157,7 @@ export default class SelectVariations extends Component {
                                 </h4>
                                 <h5>
                                     <span className="bolder">base price:</span>
-                                    <span className="shmargin">{round(price)}</span>
+                                    <span className="shmargin">{convert(shop.currency,price)}</span>
                                     <span className="selected">{currentName}</span>
                                 </h5>
                                 <p>{data.description}</p>
@@ -189,10 +179,11 @@ export default class SelectVariations extends Component {
                             <div className="col-md-12">
                                 <DisplayVariations
                                     variations={data.variations}
-                                    change={change}
+                                    convert={convert}
+                                    crr={currentName}
                                     shop={shop}
                                     handler={this.addVariation}
-                                    form={this.state.form}/>
+                                    form={form}/>
                             </div>
                         </div>
                     : <></>
@@ -204,11 +195,12 @@ export default class SelectVariations extends Component {
                             <div className="col-md-12">
                                 <h5 className="bolder">extra ingredients:</h5>
                                 <DisplayExtras
+                                    convert={convert}
                                     extras={extras}
-                                    change={change}
                                     shop={shop}
+                                    crr={currentName}
                                     handler={this.addExtra}
-                                    form={this.state.form}/>
+                                    form={form}/>
                             </div>
                         </div>
                     : <></>
@@ -217,8 +209,12 @@ export default class SelectVariations extends Component {
                     <div className="col-md-12 alignright">
                         <h5>
                             <span className="bolder">Total...:</span>
-                            <span className="shmargin">{round(total)}</span>
-                            <span className="selected">{currentName}</span>
+                            <span className="shmargin">
+                                { convert(shop.currency,total*form.quantity)}
+                            </span>
+                            <span className="selected">
+                                {currentName}
+                            </span>
                         </h5>
                         <div className="smargin">
                             <span className="smargin">how many items:</span>
@@ -229,7 +225,9 @@ export default class SelectVariations extends Component {
                                 onClick={this.addQuantity}>
                                 -
                             </button>
-                            <span className="shmargin bolder">{form.quantity}</span>
+                            <span className="shmargin bolder">
+                                {form.quantity}
+                            </span>
                             <button
                                 value={1}
                                 className="button bolder circle"
@@ -243,7 +241,7 @@ export default class SelectVariations extends Component {
                                 {this.state.error}
                             </span>
                         </div>
-                        <div>
+                        <div className="mbpaddingt">
                             <button
                                 className="button bolder shmargin"
                                 style={{backgroundColor:"transparent",color:"var(--lgray)"}}

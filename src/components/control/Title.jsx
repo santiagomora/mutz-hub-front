@@ -5,16 +5,20 @@ import {
 import {
     withRouter
 } from 'react-router-dom';
-
-import Link from './Link.jsx';
+import {
+    storage
+} from '../../helper/helperIndex.jsx';
+import {
+    Link
+} from 'react-router-dom';
 
 export default withRouter( Title )
 
 function Title({
     change,
     changeCurrency,
-    logout,
     user,
+    logout,
     currency
 }) {
     return (

@@ -1,5 +1,7 @@
-import React from 'react'
-import Link from './control/Link.jsx';
+import React from 'react';
+import {
+    Link
+} from 'react-router-dom';
 
 export default function NotFound({data}){
     return (

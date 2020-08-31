@@ -1,28 +1,26 @@
-import ReactDOM from 'react-dom';
 import React, {
-    Component,
-    useContext
+    Component
 } from 'react';
 import {
     Redirect
 } from 'react-router-dom'
 import {
     OrderPreview
-} from '../../../components/hocs/OrderVisualization.jsx';
-import {
-    AuthUser
-} from '../../../components/helper/AuthUser.jsx';
-import {
-    POST
-} from '../../../components/api.jsx';
+} from '../../../components/control/OrderVisualization.jsx';
+import{
+    storage,
+    round
+} from '../../../helper/helperIndex.jsx';
+
+import AuthUser from '../../../context/AuthUser.jsx';
 
 import Modal from '../../../components/control/Modal.jsx';
 
 import CheckoutForm from './form/CheckoutForm.jsx';
 
-import ConditionalRender from '../../../components/hocs/ConditionalRender.jsx';
+import ConditionalRender from '../../../components/composition/ConditionalRender.jsx';
 
-import ValidationHandler from '../../../components/hocs/ValidationHandler.jsx';
+import RequestHandler from '../../../components/hocs/RequestHandler.jsx';
 
 const validation = {
     ord_cli_address:{
@@ -57,7 +55,7 @@ const fieldDisplay ={
     ord_observations:"Observations"
 }
 
-const defaultForm ={
+const form ={
     ord_cli_address:"",
     ord_cli_telephone:"",
     ord_cli_name:"",
@@ -67,9 +65,9 @@ const defaultForm ={
 
 function getTotal(items){
     const tot = items.reduce(
-        (t,e) =>  t+=e.total,0
+        (t,e) =>  t+=(e.total*e.quantity),0
     )
-    return Math.trunc(tot*100)/100
+    return round( tot )
 }
 
 function initializeForm(user){
@@ -82,7 +80,7 @@ function initializeForm(user){
     })
 }
 
-export default class Checkout extends Component {
+class Checkout extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -97,40 +95,51 @@ export default class Checkout extends Component {
     static contextType = AuthUser;
 
     submit(form){
-        const loc = this.props.location.state||{},
-            user = this.context||{};
-        if( ( ( loc.order||{} ).items||[]).length<=0 )
+        const {order,change,convert} = this.props,
+            user = this.context.user||{};
+        if( ( ( order||{} ).items||[]).length<=0 )
             return this.setState({error:"you have not selected any items."})
         this.setState(
             {loading:true},
             () =>{
-                this.props.performRequest({
+                const {shipping,currency} = order.shop,
+                    {rate,tag} = change,
+                    total = getTotal(order.items);
+                this.props.requestHandler({
                     method:'post',
-                    options:{
+                    options:() => ({
                         url:"/order/save",
                         withCredentials:false,
                         data:{
-                            ...loc.order,
+                            ...order,
                             client:{
                                 ord_cli_id:user.cli_id||"",
                                 ...form,
                             },
-                            ord_total:getTotal( loc.order.items ),
-                            currency:loc.change.curr
+                            shipping:convert(currency,shipping),
+                            conversion: currency===change.curr
+                                ? 1
+                                : rate[tag],
+                            total:convert(currency,total+shipping),
+                            currency:change.curr
                         },
-                    },
-                    successCallback:
+                    }),
+                    onSuccess:
                         res => {
                             this.setState({
                                 loading:false,
                                 success:res.data.msg
                                 },
-                                () => this.toggleModal()
+                                () => {
+                                    storage.delete(['order','shop']);
+                                    this.toggleModal()
+                                }
                             )
                         },
-                    errorCallback: (err) => {
+                    onError: (err) => {
                         this.setState({
-                            loading:false
+                            loading:false,
+                            error: "An error ocurred while processing your order."
                         })
                     }
                 });
@@ -144,25 +153,16 @@ export default class Checkout extends Component {
         )
     }
 
-    componentWillUnmount(){
-        this.props.cancelRequest();
-    }
-
     redirect(){
-        const loc = this.props.location.state||{};
-        this.props.history.push("/",{
-            change:loc.change
-        })
+        this.props.history.push("/")
     }
 
     render () {
         const props = this.props,
-            loc = props.location.state||{},
-            order = loc.order||{},
-            rate = loc.change||{},
-            curr = loc.curr,
-            form = initializeForm(this.context);
-
+            {order,change,convert} = props,
+            {user} = this.context,
+            curr = change.curr,
+            form = initializeForm(user||{});
         return (
             <>
                 <Modal show={this.state.show}>
@@ -194,21 +194,19 @@ export default class Checkout extends Component {
                             <div className="col-md-6">
                                 <h4 className="bolder">Almost there!</h4>
                                 <p className="bolder redfont">{this.state.error}</p>
-                                <ValidationHandler
+                                <CheckoutForm
                                     submit={this.submit}
                                     fieldDisplay={fieldDisplay}
                                     validation={validation}
-                                    form = {form}>
-                                    <CheckoutForm
-                                        cancel={this.props.cancelRequest}
-                                        loading={this.state.loading}/>
-                                </ValidationHandler>
+                                    form = {form}
+                                    cancel={this.props.cancelRequest}
+                                    loading={this.state.loading}/>
                             </div>
                         </ConditionalRender>
                         <div className={props.hideForm ? "col-md-12" : "col-md-6"}>
                             <OrderPreview
                                 toggleItem={props.toggleItem}
-                                state={loc}
+                                state={{order,change,convert}}
                                 hideButton={!props.showButton}/>
                         </div>
                     </div>
@@ -217,3 +215,5 @@ export default class Checkout extends Component {
         )
     }
 }
+
+export default RequestHandler( Checkout );

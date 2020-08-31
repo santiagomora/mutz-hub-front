@@ -1,19 +1,22 @@
-import React from 'react';
+import React,{
+    useContext
+} from 'react';
 import {
     Route,
     Switch,
     Redirect
 } from 'react-router-dom';
 
+import AuthUser from '../../context/AuthUser.jsx';
+
 import Login from './component/Login.jsx'
 
 import Register from './component/Register.jsx'
 
-import Protected from '../../components/hocs/Protected.jsx';
-
 import NotFound from '../../components/NotFound.jsx';
 
 export default function AuthRouting (props) {
+    const auth = useContext( AuthUser );
     return (
         <Switch>
             <Route
@@ -22,8 +25,8 @@ export default function AuthRouting (props) {
                     (match) => {
                         return(
                             <Register
-                                authenticate={props.authenticate}
-                                login={props.login}
+                                authenticate={auth.authenticate}
+                                requestOnMount={false}
                                 {...match}/>
                     )}
                 }/>
@@ -32,8 +35,8 @@ export default function AuthRouting (props) {
                 render={
                     (match) => (
                         <Login
-                            authenticate={props.authenticate}
-                            login={props.login}
+                            authenticate={auth.authenticate}
+                            requestOnMount={false}
                             {...match}/>
                     )
                 }/>

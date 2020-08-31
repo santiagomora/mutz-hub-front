@@ -1,34 +1,27 @@
 import React, {
     Component
 } from 'react';
-import ReactDOM from 'react-dom';
 import {
     CheckBox
 } from '../../../../components/input/CheckBox.jsx';
 import {
-    currencyChange
-} from '../../../../components/helper/currencyChange.jsx';
-import {
+    round,
     searchItem
-} from '../../../../components/helper/searchItem.jsx';
+} from '../../../../helper/helperIndex.jsx';
 
 export default function DisplayExtras({
     extras,
-    change,
     form,
     shop,
-    handler
+    crr,
+    handler,
+    convert
 }){
     return (
         <>
         {
             extras.map(
                 (ex,i) => {
-                    const [crr,pri] =  currencyChange({
-                        price:ex.price,
-                        shop:shop.currency,
-                        ...change
-                    });
                     return(
                         <CheckBox
                             key={i}
@@ -45,7 +38,10 @@ export default function DisplayExtras({
                                     </div>
                                     <div className="iblock fifty">
                                         <p className="alignright vmiddle nomargin wfull">
-                                            <span className="shmargin"><span className="bolder">+</span>{pri}</span>
+                                            <span className="shmargin">
+                                                <span className="bolder">+</span>
+                                                {convert(shop.currency,ex.price)}
+                                            </span>
                                             <span className="selected">{crr}</span>
                                         </p>
                                     </div>

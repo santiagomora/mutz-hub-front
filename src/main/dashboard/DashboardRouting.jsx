@@ -5,13 +5,17 @@ import {
     Redirect
 } from 'react-router-dom';
 
-import Dashboard from './Dashboard.jsx';
+import HeaderHandler from '../../components/hocs/HeaderHandler.jsx';
 
-import Protected from '../../components/hocs/Protected.jsx';
+import OrderHandler from '../../components/hocs/OrderHandler.jsx'
+
+import Dashboard from './Dashboard.jsx';
 
 import NotFound from '../../components/NotFound.jsx';
 
-export default function DashboardRouting (props) {
+import Footer from '../../main/Footer.jsx';
+
+function DashboardRouting (props) {
     return (
         <Switch>
             <Route
@@ -20,10 +24,10 @@ export default function DashboardRouting (props) {
                 render={
                     (match) => (
                         <Dashboard
-                            save={props.save}
-                            user={props.user}
-                            logout={props.logout}
-                            {...match}/>
+                            {...match}
+                            {...props}
+                            params={{id:props.user.cli_id}}
+                            requestOnMount={true}/>
                     )
                 }/>
             <Route
@@ -33,3 +37,5 @@ export default function DashboardRouting (props) {
         </Switch>
     );
 }
+
+export default HeaderHandler( OrderHandler( DashboardRouting,true ) );

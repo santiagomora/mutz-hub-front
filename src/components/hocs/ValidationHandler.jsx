@@ -45,70 +45,74 @@ const checkValue = ({
 
 const finalCheck = (arr) => arr.filter( e => e.length>0 ).pop();
 
-export default class ValidationHandler extends Component {
+export default function ValidationHandler ( Form ) {
 
-    constructor(props){
-        super(props);
-        this.state = {
-            form:this.props.form,
-            errors:{}
-        }
-        this.changeText = this.changeText.bind(this);
-        this.checkErrors = this.checkErrors.bind(this);
-        this.submit = this.submit.bind(this);
-    }
+    return class Handler extends Component {
 
-    checkErrors({value,name}){
-        const errors = {},
-            validation = this.props.validation,
-            fieldDisplay = this.props.fieldDisplay;
-        errors[name] = checkValue({value,name,validation,fieldDisplay});
-        return errors;
-    }
-
-    changeText(e){
-        e.preventDefault();
-        const value = e.currentTarget.value,
-            name = e.currentTarget.getAttribute("name"),
-            form = this.state.form,
-            errors = this.state.errors;
-        form[name] = value;
-        this.setState({
-            form,
-            errors:{
-                ...errors,
-                ...this.checkErrors({value,name})
+        constructor(props){
+            super(props);
+            this.state = {
+                form:this.props.form,
+                errors:{}
             }
-        })
-    }
+            this.changeText = this.changeText.bind(this);
+            this.checkErrors = this.checkErrors.bind(this);
+            this.submit = this.submit.bind(this);
+        }
 
-    submit(e){
-        e.preventDefault();
-        const form = this.state.form,
-            errors = Object.keys(form).reduce(
-                (t,e) => ({
-                    ...t,
-                    ...this.checkErrors({name:e,value:form[e]})
-                }),{}
-            );
-        if ( finalCheck( Object.values( errors ) ) )
-            this.setState({errors})
-        else
-            this.props.submit(this.state.form);
-    }
+        checkErrors({value,name}){
+            const errors = {},
+                validation = this.props.validation,
+                fieldDisplay = this.props.fieldDisplay;
+            errors[name] = checkValue({value,name,validation,fieldDisplay});
+            return errors;
+        }
 
-    render(){
-        const props = this.props,
-            s = this.state;
-        return (
-            React.cloneElement(
-                this.props.children,{
-                    changeText:this.changeText,
-                    form:this.state.form,
-                    errors:this.state.errors,
-                    submit:this.submit
+        changeText(e){
+            e.preventDefault();
+            const value = e.currentTarget.value,
+                name = e.currentTarget.getAttribute("name"),
+                form = this.state.form,
+                errors = this.state.errors;
+            form[name] = value;
+            this.setState({
+                form,
+                errors:{
+                    ...errors,
+                    ...this.checkErrors({value,name})
                 }
+            })
+        }
+
+        submit(e){
+            e.preventDefault();
+            const form = this.state.form,
+                errors = Object.keys(form).reduce(
+                    (t,e) => ({
+                        ...t,
+                        ...this.checkErrors({name:e,value:form[e]})
+                    }),{}
+                );
+            if ( finalCheck( Object.values( errors ) ) )
+                this.setState({errors})
+            else
+                this.props.submit(this.state.form);
+        }
+
+        render(){
+            const {
+                form,
+                errors
+            } = this.state
+            return (
+                <Form
+                    {...this.props}
+                    changeText={this.changeText}
+                    form={form}
+                    errors={errors}
+                    submit={this.submit}/>
             )
-        )
+        }
     }
+
 }

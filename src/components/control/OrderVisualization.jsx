@@ -218,29 +218,34 @@ export function OrderPreview({
 export function OrderBanner({
     toggleItem,
     state,
-    hideBanner
+    hideBanner,
+    toggleModal
 }){
-    const [show,toggle] = useState(false),
-        toggleShow = e => {
+    const [showHover,toggleHover] = useState(false),
+        toggleH = e => {
             e.preventDefault();
-            toggle(!show);
+            toggleHover(!showHover);
         };
     return (
         <div
-            onMouseEnter={toggleShow}
-            onMouseLeave={toggleShow}
-            className="iblock smargin"
+            onMouseEnter={toggleH}
+            onMouseLeave={toggleH}
+            className="iblock wfull "
             style={{position:"relative"}}>
             <button
-                className="button bolder">
-                Your order
+                onClick={toggleModal}
+                className="wfull button bolder d-md-none mtmargin">
+                your order
+            </button>
+            <button
+                className="button bolder d-none d-md-inline-block">
+                your order
             </button>
             <div className={
-                show&&!hideBanner
+                showHover&&!hideBanner
                     ? "absolute wfull"
                     : "hidden"}>
-                <div className="relative"
-                    style={{left:"70%"}}>
+                <div className="relative" style={{right:"-80%"}}>
                     <div className="arrowup"></div>
                 </div>
                 <div className="gborder alignleft mpadding preview relative">

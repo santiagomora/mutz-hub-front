@@ -66,7 +66,8 @@ export default function BreadCrumb({
     location,
     current,
     state,
-    toggleItem
+    toggleItem,
+    toggleModal
 }){
     let stored = '';
     const items = getCrumbs(current),
@@ -115,6 +116,7 @@ export default function BreadCrumb({
                     <OrderBanner
                         hideBanner={hideBanner}
                         state={state}
+                        toggleModal={toggleModal}
                         toggleItem={toggleItem}/>
                 </div>
             </div>

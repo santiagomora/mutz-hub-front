@@ -90,7 +90,13 @@ export default function MenuDisplay(props) {
                             const {description,menu,extras} = e;
                             return (
                                 <div key={i}>
-                                    <img style={{maxWidth:"100%"}} src={`${RESOURCE_URL}${e.picture}`}/>
+                                    <img
+                                        style={{
+                                            width:"100%",
+                                            maxWidth:"100%",
+                                            marginBottom:"10px"
+                                        }}
+                                        src={`${RESOURCE_URL}${e.picture}`}/>
                                     {
                                         DisplayGrid({
                                             data:filter(menu,search),
@@ -114,35 +120,3 @@ export default function MenuDisplay(props) {
         </div>
     );
 }
-
-/*
-
-<div className="col-md-3 nopadding">
-</div>
-</div>
-<div
-className="row container-fluid nopadding"
-style={{margin:"0px"}}>
-{
-    Object.keys(props.data).map(
-        (e,i) => {
-            return (
-                    <div
-                        key={i}
-                        className={
-                            e === tab
-                                ? "row col-md-12 nopadding"
-                                : "hidden"
-                            }
-                        style={{margin:"0px"}}>
-                        <div
-                            className="container-fluid alignleft"
-                            style={{padding:"15px 0px"}}>
-
-                        </div>
-                    </div>
-            )
-        }
-    )
-}
-</div>*/

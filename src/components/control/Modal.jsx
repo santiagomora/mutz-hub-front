@@ -6,12 +6,14 @@ import ReactModal from 'react-modal';
 
 const customStyles = {
     content : {
-        top     : '5%',
-        left    : '15%',
+        top     : '2.5vh',
+        padding:"10px",
         right   : 'auto',
         bottom  : 'auto',
-        width   : '70%',
-        maxHeight: '90%'
+        maxHeight: '95vh',
+        borderRadius:"5px",
+        border:"solid 1px var(--lgray)",
+        backgroundColor:"white"
     }
 };
 
@@ -20,6 +22,7 @@ export default function Modal(props) {
         <ReactModal
             ariaHideApp={false}
             isOpen={props.show}
+            className="container-fluid col-xs-11 col-md-10 col-lg-8 col-sm-11 shadow nopadding"
             style = {customStyles}>
             {props.children}
         </ReactModal>

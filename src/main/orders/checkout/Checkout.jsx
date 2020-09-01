@@ -166,7 +166,7 @@ class Checkout extends Component {
         return (
             <>
                 <Modal show={this.state.show}>
-                    <div className="container-fluid">
+                    <div className="container-fluid mvpadding">
                         <div className="row">
                             <div className="col-md-12 container-fluid">
                                 <h3 className="selected">{this.state.success}</h3>

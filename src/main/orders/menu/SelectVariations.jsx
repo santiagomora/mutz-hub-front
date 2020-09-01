@@ -139,43 +139,37 @@ export default class SelectVariations extends Component {
             price = data.base_price;
 
         return (
-            <div className="container-fluid mvpadding">
-                <div className="row">
-                    <div className="col-md-10 container-fluid">
-                        <div className="row">
-                            <div className="col-md-4">
-                                <img
-                                    src={`${RESOURCE_URL}${data.pic}`}
-                                    width={`${WIDTH}px`}
-                                    height={`${HEIGHT}px`}/>
-                            </div>
-                            <div className="col-md-8">
-                                <h3 className="bolder">Choose your extras</h3>
-                                <h4>
-                                    <span>You selected </span>
-                                    <span className="bolder redfont smargin">{data.name}</span>
-                                </h4>
-                                <h5>
-                                    <span className="bolder">base price:</span>
-                                    <span className="shmargin">{convert(shop.currency,price)}</span>
-                                    <span className="selected">{currentName}</span>
-                                </h5>
-                                <p>{data.description}</p>
-                            </div>
-                    </div>
-                    </div>
-                    <div className="col-md-2">
-                        <div className="alignright">
-                            <button onClick={props.toggleModal} className="button bolder">
-                                Close
-                            </button>
-                        </div>
-                    </div>
+            <div
+                className="container-fluid"
+                style={{height:"90vh"}}>
+                <div className="row justify-content-end">
+                    <button onClick={props.toggleModal} className="button bolder">
+                        Close
+                    </button>
                 </div>
-                {
-                    Object.keys(data.variations||{}).length>0
-                    ?
-                        <div className="row">
+                <div className="row responsiveHeight" style={{overflowY:"scroll"}}>
+                    <div className="col-md-4">
+                        <img
+                            src={`${RESOURCE_URL}${data.pic}`}
+                            width={`${WIDTH}px`}
+                            height={`${HEIGHT}px`}/>
+                    </div>
+                    <div className="col-md-8">
+                        <h3 className="bolder">Choose your extras</h3>
+                        <h4>
+                            <span>You selected </span>
+                            <span className="bolder redfont smargin">{data.name}</span>
+                        </h4>
+                        <h5>
+                            <span className="bolder">base price:</span>
+                            <span className="shmargin">{convert(shop.currency,price)}</span>
+                            <span className="selected">{currentName}</span>
+                        </h5>
+                        <p>{data.description}</p>
+                    </div>
+                    {
+                        Object.keys(data.variations||{}).length>0
+                        ?
                             <div className="col-md-12">
                                 <DisplayVariations
                                     variations={data.variations}
@@ -185,13 +179,11 @@ export default class SelectVariations extends Component {
                                     handler={this.addVariation}
                                     form={form}/>
                             </div>
-                        </div>
-                    : <></>
-                }
-                {
-                    extras.length>0
-                    ?
-                        <div className="row">
+                        : <></>
+                    }
+                    {
+                        extras.length>0
+                        ?
                             <div className="col-md-12">
                                 <h5 className="bolder">extra ingredients:</h5>
                                 <DisplayExtras
@@ -202,46 +194,52 @@ export default class SelectVariations extends Component {
                                     handler={this.addExtra}
                                     form={form}/>
                             </div>
-                        </div>
-                    : <></>
-                }
-                <div className="row justify-content-end" style={{paddingTop:"10px"}}>
-                    <div className="col-md-12 alignright">
-                        <h5>
-                            <span className="bolder">Total...:</span>
-                            <span className="shmargin">
-                                { convert(shop.currency,total*form.quantity)}
-                            </span>
-                            <span className="selected">
-                                {currentName}
-                            </span>
-                        </h5>
-                        <div className="smargin">
-                            <span className="smargin">how many items:</span>
-                            <button
-                                value={-1}
-                                className="button bolder"
-                                style={{backgroundColor:"var(--main)",height:"30px",width:"30px"}}
-                                onClick={this.addQuantity}>
-                                -
-                            </button>
-                            <span className="shmargin bolder">
-                                {form.quantity}
-                            </span>
-                            <button
-                                value={1}
-                                className="button bolder circle"
-                                style={{backgroundColor:"var(--main)",height:"30px",width:"30px"}}
-                                onClick={this.addQuantity}>
-                                +
-                            </button>
-                        </div>
-                        <div>
+                        : <></>
+                    }
+                    </div>
+                    <div
+                        className="sticky-bottom row justify-content-end"
+                        style={{paddingTop:"10px"}}>
+                        <div className="col-md-12 alignright">
                             <span className="bolder" style={{color:"var(--outline)"}}>
                                 {this.state.error}
                             </span>
                         </div>
-                        <div className="mbpaddingt">
+                        <div className="col-md-4 alignright">
+                            <h5 className="nomargin  shmargin bolder iblock">how many items</h5>
+                            <div className="iblock">
+                                <button
+                                    value={-1}
+                                    className="button bolder"
+                                    style={{backgroundColor:"var(--main)",height:"30px",width:"30px"}}
+                                    onClick={this.addQuantity}>
+                                    -
+                                </button>
+                                <span className="shmargin bolder">
+                                    {form.quantity}
+                                </span>
+                                <button
+                                    value={1}
+                                    className="button bolder circle"
+                                    style={{backgroundColor:"var(--main)",height:"30px",width:"30px"}}
+                                    onClick={this.addQuantity}>
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="col-md-4 alignright">
+                            <h5>
+                                <span className="bolder">Total...:</span>
+                                <span className="shmargin">
+                                    { convert(shop.currency,total*form.quantity)}
+                                </span>
+                                <span className="selected">
+                                    {currentName}
+                                </span>
+                            </h5>
+                        </div>
+                        <div className="col-md-4 alignright">
                             <button
                                 className="button bolder shmargin"
                                 style={{backgroundColor:"transparent",color:"var(--lgray)"}}
@@ -256,7 +254,6 @@ export default class SelectVariations extends Component {
                             </button>
                         </div>
                     </div>
-                </div>
             </div>
         );
     }

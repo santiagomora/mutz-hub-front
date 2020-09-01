@@ -294,7 +294,7 @@ button{
     background-color:white;
     width:29vw;
     border-radius:5px;
-    right:20vw  ;
+    right:45%;
     max-height:70vh;
     overflow:hidden;
     z-index: 5;
@@ -394,4 +394,35 @@ button{
     font-weight:bolder;
     text-align:right;
     background-color:transparent !important;
+}
+.modal{
+    border: solid 3px var(--dgray);
+    border-radius:5px;
+}
+@media(min-width:950px){
+    .responsiveHeight{
+        height:83%
+    }
+}
+
+@media(max-width:950px) and (min-width:700px) {
+    .responsiveHeight{
+        height:77%
+    }
+}
+@media(max-width:700px){
+    .responsiveHeight{
+        height:73%
+    }
+
+    .ordercont{
+        max-height:60vh;
+        overflow-y:scroll;
+    }
+}
+
+.shadow{
+    -webkit-box-shadow: 0px 0px 2px 0px var(--dgray);
+    -moz-box-shadow: 0px 0px 2px 0px var(--dgray);
+    box-shadow: 0px 0px 2px 0px var(--dgray);
 }

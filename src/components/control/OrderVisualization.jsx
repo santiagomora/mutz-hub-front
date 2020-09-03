@@ -235,6 +235,9 @@ export function OrderBanner({
             e.preventDefault();
             toggleHover(!showHover);
         };
+    const disp = showHover
+        ? <span>&#10799; close</span>
+        : <span>your order</span>
     return (
         <div
             className="col-md-3 alignright"
@@ -247,7 +250,7 @@ export function OrderBanner({
             <button
                 onClick={toggleH}
                 className="button bolder d-none d-md-inline-block">
-                your order
+                {disp}
             </button>
             <div
                 className={

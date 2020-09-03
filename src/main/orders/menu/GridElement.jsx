@@ -40,7 +40,7 @@ export function GridElement({
                 style={{
                     border:"solid 4px transparent"
                 }}>
-                <div className="iblock">
+                <div className="iblock wfull">
                     <div className="alignright svmargin">
                         <span
                             className="shmargin font20">

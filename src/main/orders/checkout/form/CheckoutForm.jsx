@@ -94,7 +94,7 @@ function CheckoutForm({
                     }
                     <button
                         onClick={cancel}
-                        className="bolder wfull iblock">
+                        className="bolder iblock">
                         cancel
                     </button>
                     <button

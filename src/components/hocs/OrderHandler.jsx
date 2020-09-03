@@ -148,6 +148,7 @@ export default function OrderHandler( Target,hideBanner ){
                             <div className="row ">
                                 <div className="col-md-12 mvpadding">
                                     <OrderPreview
+                                        removeItem={this.removeItem}
                                         state={{change,shop,order,convert}}
                                         toggleItem={this.toggleItem}/>
                                 </div>

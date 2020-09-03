@@ -199,7 +199,7 @@ class Checkout extends Component {
                     <ConditionalRender
                         other={<></>}
                         condition={props.hideForm}>
-                        <div className="col-md-6 nopadding">
+                        <div className="col-md-6">
                             <p className="bolder redfont nomargin">
                                 {this.state.error}
                             </p>
@@ -213,7 +213,7 @@ class Checkout extends Component {
                         </div>
                     </ConditionalRender>
                     <div className={props.hideForm ? "col-md-12" : "col-md-6"}>
-                        <h3 className="bolder">Your order</h3>
+                        <h3 className="bolder mtmargin">Your order</h3>
                         <OrderPreview
                             removeItem={props.removeItem}
                             toggleItem={props.toggleItem}

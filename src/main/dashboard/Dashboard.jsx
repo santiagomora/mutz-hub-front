@@ -39,7 +39,9 @@ function Dashboard( props ){
         <div className="container-fluid">
             <div className="row">
                 <div className="col-md-12">
-                    <h1 className="bolder iblock">Dashboard</h1>
+                    <h1 className="bolder iblock">
+                        Dashboard
+                    </h1>
                 </div>
             </div>
             <div className="row">
@@ -52,14 +54,14 @@ function Dashboard( props ){
                 </LoadingComponent>
             </div>
             <div className="row mtpadding">
-                <div className="col-md-7">
+                <div className="col-md-6">
                     <h3 className="bolder">Personal information</h3>
                     <Profile
                         history={props.history}
                         requestHandler={props.requestHandler}
                         user={user}/>
                 </div>
-                <div className="col-md-5">
+                <div className="col-md-6">
                     <h3 className="bolder">Current order</h3>
                         <OrderPreview
                             removeItem={props.removeItem}

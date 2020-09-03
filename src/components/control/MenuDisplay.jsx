@@ -47,13 +47,17 @@ export default function MenuDisplay(props) {
                 iconurl={shop.pic}
                 bgurl={tab.pic}
                 description={shop.description}/>
-            <div className="row ">
+            <div className="row">
                 <div
-                    className="col-md-3">
-                    <div className="sticky-top mtpadding"
-                        style={{zIndex:0,backgroundColor:"white"}}>
-                        <h3 className="bolder">Categories</h3>
-                        <div className="secondary-line"></div>
+                    className="mtmargin col-md-3">
+                    <div className="sticky-top mpadding" style={{
+                            zIndex:0,
+                            backgroundColor:"#f2f2f2",
+                            border:"solid 4px #f2f2f2",
+                            borderRadius:"5px",
+                            top:"15px"
+                        }}>
+                        <h3 className="nomargin bolder selected">Categories</h3>
                         {
                             categories.map(
                                 (e,i) => {
@@ -88,8 +92,7 @@ export default function MenuDisplay(props) {
                             )
                         }
                         <div className="mvpadding">
-                            <h4 className="bolder">Search</h4>
-                            <div className="secondary-line mbmargin"></div>
+                            <h4 className="bolder selected">Search</h4>
                             <p> start typing to search in the current category </p>
                             <input
                                 type="text"

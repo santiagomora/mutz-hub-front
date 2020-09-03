@@ -142,7 +142,7 @@ export default function OrderHandler( Target,hideBanner ){
                                 <button
                                     onClick={this.toggleModal}
                                     className="button bolder">
-                                    close
+                                    &#10799; close
                                 </button>
                             </div>
                             <div className="row ">

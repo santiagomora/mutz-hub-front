@@ -44,7 +44,7 @@ export function GridElement({
                     <div className="alignright svmargin">
                         <span
                             className="shmargin font20">
-                            {convert(data.base_price)}
+                            {convert(shop.currency,data.base_price)}
                         </span>
                         <span
                             className="bolder"

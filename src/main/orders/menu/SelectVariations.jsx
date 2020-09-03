@@ -139,85 +139,79 @@ export default class SelectVariations extends Component {
             price = data.base_price;
 
         return (
-            <div className="container-fluid mvpadding">
-                <div className="row">
-                    <div className="col-md-10 container-fluid">
-                        <div className="row">
-                            <div className="col-md-4">
-                                <img
-                                    src={`${RESOURCE_URL}${data.pic}`}
-                                    width={`${WIDTH}px`}
-                                    height={`${HEIGHT}px`}/>
-                            </div>
-                            <div className="col-md-8">
-                                <h3 className="bolder">Choose your extras</h3>
-                                <h4>
-                                    <span>You selected </span>
-                                    <span className="bolder redfont smargin">{data.name}</span>
-                                </h4>
-                                <h5>
-                                    <span className="bolder">base price:</span>
-                                    <span className="shmargin">{convert(shop.currency,price)}</span>
-                                    <span className="selected">{currentName}</span>
-                                </h5>
-                                <p>{data.description}</p>
-                            </div>
-                    </div>
-                    </div>
-                    <div className="col-md-2">
-                        <div className="alignright">
-                            <button onClick={props.toggleModal} className="button bolder">
-                                Close
-                            </button>
+            <div
+                className="container-fluid"
+                style={{maxHeight:"90vh",overflowY:"scroll"}}>
+                <div className="row justify-content-end sticky-top">
+                    <button onClick={props.toggleModal} className="button bolder">
+                        Close
+                    </button>
+                </div>
+                <div className="row"
+                    style={{maxHeight:"90%"}}>
+                    <div className="col-md-12">
+                        <div className="iblock mrpadding">
+                            <img
+                                className="asuper"
+                                src={`${RESOURCE_URL}${data.pic}`}
+                                width={`${WIDTH}px`}
+                                height={`${HEIGHT}px`}/>
                         </div>
+                        <div className="iblock">
+                            <h3 className="bolder">Choose your extras</h3>
+                            <h4>
+                                <span>You selected </span>
+                                <span className="bolder redfont smargin">{data.name}</span>
+                            </h4>
+                            <h5>
+                                <span className="bolder">base price:</span>
+                                <span className="shmargin">{convert(shop.currency,price)}</span>
+                                <span className="selected">{currentName}</span>
+                            </h5>
+                            <p>{data.description}</p>
+                        </div>
+                        {
+                            Object.keys(data.variations||{}).length>0
+                            ?
+                                <div className="col-md-12">
+                                    <DisplayVariations
+                                        variations={data.variations}
+                                        convert={convert}
+                                        crr={currentName}
+                                        shop={shop}
+                                        handler={this.addVariation}
+                                        form={form}/>
+                                </div>
+                            : <></>
+                        }
+                        {
+                            extras.length>0
+                            ?
+                                <div className="col-md-12">
+                                    <h5 className="bolder">extra ingredients:</h5>
+                                    <DisplayExtras
+                                        convert={convert}
+                                        extras={extras}
+                                        shop={shop}
+                                        crr={currentName}
+                                        handler={this.addExtra}
+                                        form={form}/>
+                                </div>
+                            : <></>
+                        }
                     </div>
                 </div>
-                {
-                    Object.keys(data.variations||{}).length>0
-                    ?
-                        <div className="row">
-                            <div className="col-md-12">
-                                <DisplayVariations
-                                    variations={data.variations}
-                                    convert={convert}
-                                    crr={currentName}
-                                    shop={shop}
-                                    handler={this.addVariation}
-                                    form={form}/>
-                            </div>
-                        </div>
-                    : <></>
-                }
-                {
-                    extras.length>0
-                    ?
-                        <div className="row">
-                            <div className="col-md-12">
-                                <h5 className="bolder">extra ingredients:</h5>
-                                <DisplayExtras
-                                    convert={convert}
-                                    extras={extras}
-                                    shop={shop}
-                                    crr={currentName}
-                                    handler={this.addExtra}
-                                    form={form}/>
-                            </div>
-                        </div>
-                    : <></>
-                }
-                <div className="row justify-content-end" style={{paddingTop:"10px"}}>
+                <div
+                    className="row justify-content-end  mvpadding sticky-bottom"
+                    style={{paddingTop:"10px"}}>
                     <div className="col-md-12 alignright">
-                        <h5>
-                            <span className="bolder">Total...:</span>
-                            <span className="shmargin">
-                                { convert(shop.currency,total*form.quantity)}
-                            </span>
-                            <span className="selected">
-                                {currentName}
-                            </span>
-                        </h5>
-                        <div className="smargin">
-                            <span className="smargin">how many items:</span>
+                        <span className="bolder" style={{color:"var(--outline)"}}>
+                            {this.state.error}
+                        </span>
+                    </div>
+                    <div className="col-md-4 alignright">
+                        <h5 className="nomargin  shmargin bolder iblock">how many items</h5>
+                        <div className="iblock">
                             <button
                                 value={-1}
                                 className="button bolder"
@@ -236,25 +230,31 @@ export default class SelectVariations extends Component {
                                 +
                             </button>
                         </div>
-                        <div>
-                            <span className="bolder" style={{color:"var(--outline)"}}>
-                                {this.state.error}
+                    </div>
+                    <div className="col-md-4 alignright">
+                        <h5>
+                            <span className="bolder">Total...:</span>
+                            <span className="shmargin">
+                                { convert(shop.currency,total*form.quantity)}
                             </span>
-                        </div>
-                        <div className="mbpaddingt">
-                            <button
-                                className="button bolder shmargin"
-                                style={{backgroundColor:"transparent",color:"var(--lgray)"}}
-                                onClick={e => {e.preventDefault();this.props.toggleModal()}}>
-                                cancel
-                            </button>
-                            <button
-                                className="button bolder"
-                                style={{backgroundColor:"var(--main)"}}
-                                onClick={this.saveOrder.bind(this)}>
-                                add to order.
-                            </button>
-                        </div>
+                            <span className="selected">
+                                {currentName}
+                            </span>
+                        </h5>
+                    </div>
+                    <div className="col-md-4 alignright">
+                        <button
+                            className="button bolder shmargin"
+                            style={{backgroundColor:"transparent",color:"var(--lgray)"}}
+                            onClick={e => {e.preventDefault();this.props.toggleModal()}}>
+                            cancel
+                        </button>
+                        <button
+                            className="button bolder"
+                            style={{backgroundColor:"var(--main)"}}
+                            onClick={this.saveOrder.bind(this)}>
+                            add to order.
+                        </button>
                     </div>
                 </div>
             </div>

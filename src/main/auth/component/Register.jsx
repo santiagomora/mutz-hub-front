@@ -26,7 +26,8 @@ const validation = {
     },
     cli_name:{
         required:true,
-        max:50
+        max:50,
+        alphabetic:true
     },
     cli_email:{
         email:true,

@@ -17,6 +17,8 @@ import {
     OrderPreview
 } from '../control/OrderVisualization.jsx';
 
+import Modal from '../control/Modal.jsx';
+
 import ExchangeContext from '../../context/ExchangeContext.jsx';
 
 import BreadCrumb from '../control/BreadCrumb.jsx';
@@ -40,10 +42,12 @@ export default function OrderHandler( Target,hideBanner ){
 
         constructor(props){
             super(props);
-            this.state={};
+            this.state={modal:false};
             this.toggleItem = this.toggleItem.bind(this);
             this.saveOrder = this.saveOrder.bind(this);
             this.store = this.store.bind(this);
+            this.removeItem = this.removeItem.bind(this);
+            this.toggleModal = this.toggleModal.bind(this);
         }
 
         static contextType = ExchangeContext;
@@ -77,6 +81,19 @@ export default function OrderHandler( Target,hideBanner ){
             this.store('order',order);
         }
 
+        removeItem(e){
+            e.preventDefault();
+            let item;
+            const elem = e.currentTarget,
+                index = parseInt(elem.getAttribute("index")),
+                {order} = this.state,
+                {items} = order;
+            if (items.length>0){
+                items.splice(index,1);
+                order.items = items;
+            }
+            this.store('order',order);
+        }
 
         saveOrder(item){
             const {shop,order} = this.state;
@@ -96,6 +113,11 @@ export default function OrderHandler( Target,hideBanner ){
             this.store('order',ord);
         }
 
+        toggleModal(e){
+            e.preventDefault();
+            this.setState({modal:!this.state.modal})
+        }
+
         componentDidMount(){
             const {
                 order,
@@ -106,26 +128,48 @@ export default function OrderHandler( Target,hideBanner ){
 
         render(){
             const {pathname} = this.props.location,
-                {order,shop} = this.state,
+                {order,shop,modal} = this.state,
                 {change,convert} = this.context,
-                hideBanner = pathname.match('/checkout'),
+                hideBanner = pathname.match('checkout'),
                 hideCrumbs = pathname.match('/dashboard');
 
             return (
                 <div className="container-fluid">
+                    <Modal show={modal}>
+                        <div
+                            className="container-fluid">
+                            <div className="row justify-content-end">
+                                <button
+                                    onClick={this.toggleModal}
+                                    className="button bolder">
+                                    close
+                                </button>
+                            </div>
+                            <div className="row ">
+                                <div className="col-md-12 mvpadding">
+                                    <OrderPreview
+                                        state={{change,shop,order,convert}}
+                                        toggleItem={this.toggleItem}/>
+                                </div>
+                            </div>
+                        </div>
+                    </Modal>
                     <div className={hideCrumbs ? "hidden" : "row"}>
                         <BreadCrumb
                             hideBanner={hideBanner}
                             location={pathname}
+                            removeItem={this.removeItem}
                             current={matchSection(pathname)}
+                            toggleModal={this.toggleModal}
                             state={{change,shop,order,convert}}
                             toggleItem={this.toggleItem}/>
                     </div>
                     <div className="row">
-                        <div className="col-md-12"
+                        <div className="col-md-12 nopadding"
                             style={{margin:"0px"}}>
                             <Target
                                 toggleItem={this.toggleItem}
+                                removeItem={this.removeItem}
                                 save = {this.saveOrder}
                                 {...this.state}
                                 {...this.props}/>

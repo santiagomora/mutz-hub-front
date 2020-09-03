@@ -23,19 +23,15 @@ function Title({
 }) {
     return (
         <>
-            <div className="col-md-6 col-sm-12" >
+            <div className="col-md-4 col-sm-12" >
                 <Link to="/">
-                    <h1 className="app-title bolder">
+                    <h1 className="nomargin app-title bolder">
                         the mutz hub.
                     </h1>
                 </Link>
             </div>
-            <div className="col-md-6 col-sm-12 alignright">
-                <div style={{
-                        position:"absolute",
-                        bottom:"5px",
-                        right:"15px"
-                    }}>
+            <div className="col-md-8 col-sm-12 alignright align-items-center">
+                <div className="iblock mtmargin">
                     {
                         user
                         ?

@@ -2,7 +2,7 @@
     --main:#22b295;
     --outline:#b2223f;
     --lgray:lightgray;
-    --dgray:darkslategray;
+    --dgray:rgba(30,50,50);
 }
 .block{
     display:block;
@@ -62,7 +62,7 @@ a:hover{
 }
 
 .grayline{
-    height:4px;
+    height:5px;
     border:solid 1px var(--lgray);
     background-color:var(--lgray);
     border-radius:5px;
@@ -144,6 +144,9 @@ a:hover{
 }
 .subalign{
     vertical-align: sub !important;
+}
+.asuper{
+    vertical-align: super;
 }
 .mvmargin{
     margin-top:15px;
@@ -294,7 +297,7 @@ button{
     background-color:white;
     width:29vw;
     border-radius:5px;
-    right:20vw  ;
+    right:40%;
     max-height:70vh;
     overflow:hidden;
     z-index: 5;
@@ -394,4 +397,74 @@ button{
     font-weight:bolder;
     text-align:right;
     background-color:transparent !important;
+}
+.modal{
+    border: solid 3px var(--dgray);
+    border-radius:5px;
+}
+@media(min-width:950px){
+    .responsiveHeight{
+        height:83%
+    }
+}
+
+@media(max-width:950px) and (min-width:700px) {
+    .responsiveHeight{
+        height:77%
+    }
+}
+@media(max-width:700px){
+    .responsiveHeight{
+        height:73%
+    }
+
+    .ordercont{
+        max-height:60vh;
+        overflow-y:scroll;
+    }
+}
+
+.shadow{
+    -webkit-box-shadow: 0px 0px 2px 0px var(--dgray);
+    -moz-box-shadow: 0px 0px 2px 0px var(--dgray);
+    box-shadow: 0px 0px 2px 0px var(--dgray);
+}
+.displayflex{
+    display:flex;
+    flex-wrap:wrap;
+}
+
+.displayflex > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+}
+.font20{
+    font-size:20px;
+}
+.grayback{
+    background-color:#f2f2f2;
+    margin-bottom:10px;
+    border-radius:5px;
+}
+.dfont{
+    color:var(--dgray);
+}
+.backconfig{
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+}
+.hideover{
+    overflow:hidden;
+}
+.norpadding{
+    padding-right:0px;
+}
+.roundbord{
+    border-radius:5px;
+    border:solid 4px transparent;
+    overflow:hidden;
+}
+.fright{
+    float:right;
 }

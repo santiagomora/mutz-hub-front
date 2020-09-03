@@ -36,37 +36,48 @@ export function GridElement({
                     })
                 }
                 key={data.id}
-                className={`hoverlight roundborder mpadding alignleft col-md-${12/cols}`}
+                className={`hoverlight roundborder mbpadding alignleft col-md-${12/cols}`}
                 style={{
                     border:"solid 4px transparent"
                 }}>
-                <h5 className="bolder" style={{color:"var(--outline)"}}>
-                    {data.name}
-                </h5>
-                <div className="grayline svmargin"></div>
-                <div className="alignright">
-                    <span className="bolder stext">base price:</span>
-                    <span className="shmargin">{round(data.base_price)}</span>
-                    <span className="bolder" style={{color:"var(--main)"}}>{tag}</span>
-                </div>
-                <div className="aligncenter svpadding">
-                    <img
-                        style={{maxHeight:"100px"}}
-                        src={`${RESOURCE_URL}${data.pic}`}/>
-                </div>
-                <p className="nomargin bolder">Ingredients:</p>
-                <p className="nomargin">{data.description}</p>
-                <div>
-                {
-                    variations.map(
-                        (t,i) => (
-                            <span key={i} className="bolder srmargin iblock variation stext"
-                                style={{padding:"0px 5px"}}>
-                                {t.var_name}
-                            </span>
+                <div className="iblock">
+                    <div className="alignright svmargin">
+                        <span
+                            className="shmargin font20">
+                            {round(data.base_price)}
+                        </span>
+                        <span
+                            className="bolder"
+                            style={{color:"var(--main)"}}>
+                            {tag}
+                        </span>
+                        <div className="bolder" style={{marginTop:"-8px"}}>
+                            base price
+                        </div>
+                    </div>
+                    <div className="aligncenter svpadding"  style={{marginTop:"-8px"}}>
+                        <img
+                            style={{maxHeight:"100px"}}
+                            src={`${RESOURCE_URL}${data.pic}`}/>
+                    </div>
+                    <h5 className="bolder" style={{color:"var(--outline)"}}>
+                        {data.name}
+                    </h5>
+                    <div className="grayline svmargin"></div>
+                    <p className="nomargin bolder">Ingredients:</p>
+                    <p className="nomargin svmargin">{data.description}</p>
+                    <div className="stmargin">
+                    {
+                        variations.map(
+                            (t,i) => (
+                                <span key={i} className="bolder srmargin iblock variation stext"
+                                    style={{padding:"0px 5px"}}>
+                                    {t.var_name}
+                                </span>
+                            )
                         )
-                    )
-                }
+                    }
+                    </div>
                 </div>
             </button>
         )

@@ -29,7 +29,7 @@ export function DisplayGrid({
         }
 
         rows.push(
-            <div key={i} className="row">{cols}</div>
+            <div key={i} className="row displayflex">{cols}</div>
         );
 
         cols = [];

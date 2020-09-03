@@ -13,6 +13,8 @@ import {
     storage
 } from '../../../helper/helperIndex.jsx';
 
+import SectionTitle from '../../../components/control/SectionTitle.jsx';
+
 import ExchangeContext from '../../../context/ExchangeContext.jsx';
 
 import LoadingComponent from '../../../components/composition/LoadingComponent.jsx';
@@ -29,24 +31,28 @@ function ShopForm (props) {
             convert:props.convert
         };
     return (
-        <div className="container-fluid mvpadding aligncenter">
+        <div className="container-fluid mvpadding">
+            <SectionTitle
+                description="choose your shop"
+                iconurl="/img/shop_icon.png"
+                title="Pizza hubs."/>
             <div className="row">
-                <h2 className="alignleft bolder">pizza hubs.</h2>
+                <div className="col-md-12 mvpadding">
+                    <div className="container-fluid">
+                        <LoadingComponent
+                            data={props.data}>
+                            {
+                                DisplayGrid({
+                                    data:Object.values(props.data||{}),
+                                    extra,
+                                    GridElement,
+                                    colNum:props.display ? COLUMNS-1 : COLUMNS
+                                })
+                            }
+                        </LoadingComponent>
+                    </div>
+                </div>
             </div>
-            <div className="row" style={{paddingBottom:"15px"}}>
-                click on each shop to see its menu.
-            </div>
-            <LoadingComponent
-                data={props.data}>
-                {
-                    DisplayGrid({
-                        data:Object.values(props.data||{}),
-                        extra,
-                        GridElement,
-                        colNum:props.display ? COLUMNS-1 : COLUMNS
-                    })
-                }
-            </LoadingComponent>
         </div>
     )
 }

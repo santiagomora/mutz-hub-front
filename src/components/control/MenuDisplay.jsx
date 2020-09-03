@@ -110,33 +110,31 @@ export default function MenuDisplay(props) {
                                 (e,i) => {
                                     const {description,menu,extras} = e;
                                     return (
-                                        <>
-                                            <div className="row">
-                                                <div className="col-md-12">
-                                                    <h3 className="bolder mtpadding">
-                                                        {e.description}
-                                                    </h3>
-                                                    <div className="grayline"></div>
-                                                </div>
-                                                <div className="col-md-12 sbmargin mtpadding">
-                                                    <div className="container-fluid">
-                                                    {
-                                                        DisplayGrid({
-                                                            data:filter(menu,search),
-                                                            GridElement:props.grid.elem({
-                                                                clickHandler:props.clickHandler
-                                                            }),
-                                                            extra:{
-                                                                ...props.grid.extra,
-                                                                extras
-                                                            },
-                                                            colNum:props.grid.columns
-                                                        })
-                                                    }
-                                                    </div>
+                                        <div className="row" key={i}>
+                                            <div className="col-md-12">
+                                                <h3 className="bolder mtpadding">
+                                                    {e.description}
+                                                </h3>
+                                                <div className="grayline"></div>
+                                            </div>
+                                            <div className="col-md-12 sbmargin mtpadding">
+                                                <div className="container-fluid">
+                                                {
+                                                    DisplayGrid({
+                                                        data:filter(menu,search),
+                                                        GridElement:props.grid.elem({
+                                                            clickHandler:props.clickHandler
+                                                        }),
+                                                        extra:{
+                                                            ...props.grid.extra,
+                                                            extras
+                                                        },
+                                                        colNum:props.grid.columns
+                                                    })
+                                                }
                                                 </div>
                                             </div>
-                                        </>
+                                        </div>
                                     )
                                 }
                             )

@@ -468,3 +468,6 @@ button{
 .fright{
     float:right;
 }
+.ReactModal__Overlay{
+    z-index:999;
+}

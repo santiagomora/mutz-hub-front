@@ -13,7 +13,8 @@ const customStyles = {
         maxHeight: '95vh',
         borderRadius:"5px",
         border:"solid 1px var(--lgray)",
-        backgroundColor:"white"
+        backgroundColor:"white",
+        zIndex:999999
     }
 };
 

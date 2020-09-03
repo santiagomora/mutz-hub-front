@@ -8,6 +8,8 @@ import {
     OrderBanner
 } from '../control/OrderVisualization.jsx';
 
+import ConditionalRender from '../composition/ConditionalRender.jsx';
+
 const crumbs = {
     shops:{
         section:"shops",
@@ -67,7 +69,8 @@ export default function BreadCrumb({
     current,
     state,
     toggleItem,
-    toggleModal
+    toggleModal,
+    removeItem
 }){
     let stored = '';
     const items = getCrumbs(current),
@@ -78,47 +81,49 @@ export default function BreadCrumb({
     return (
         <div className="container-fluid">
             <div className="row">
-            {
-                items.map(
-                    (e,i) => {
-                        const isEnabled = (curr.paint||[]).indexOf(e.section) === -1,
-                            paint = hasOrder||!isEnabled
-                                ? "selected bolder"
-                                : "disabled bolder"
-                        return (
-                            <div
-                                key={i}
-                                className="col-md-3">
-                            {
-                                hasOrder||!isEnabled
-                                ?
-                                    <Link to={{
-                                        pathname:e.link((state.shop||{}).id)
-                                    }}>
-                                        <span className={paint}>
-                                            {e.title(paint)}
-                                        </span>
-                                    </Link>
-                                :
-                                    <>
-                                        <span
-                                            className={paint}>
-                                            {e.title(paint)}
-                                        </span>
-                                    </>
-                            }
-                            </div>
-                        );
-                    }
-                )
-            }
-                <div className="col-md-3 alignright">
+                {
+                    items.map(
+                        (e,i) => {
+                            const isEnabled = (curr.paint||[]).indexOf(e.section) === -1,
+                                paint = hasOrder||!isEnabled
+                                    ? "selected bolder"
+                                    : "disabled bolder"
+                            return (
+                                <div
+                                    key={i}
+                                    className="col-md-3">
+                                {
+                                    hasOrder||!isEnabled
+                                    ?
+                                        <Link to={{
+                                            pathname:e.link((state.shop||{}).id)
+                                        }}>
+                                            <span className={paint}>
+                                                {e.title(paint)}
+                                            </span>
+                                        </Link>
+                                    :
+                                        <>
+                                            <span
+                                                className={paint}>
+                                                {e.title(paint)}
+                                            </span>
+                                        </>
+                                }
+                                </div>
+                            );
+                        }
+                    )
+                }
+                <ConditionalRender
+                    condition={hideBanner}
+                    other={<></>}>
                     <OrderBanner
-                        hideBanner={hideBanner}
                         state={state}
+                        removeItem={removeItem}
                         toggleModal={toggleModal}
                         toggleItem={toggleItem}/>
-                </div>
+                </ConditionalRender>
             </div>
         </div>
     );

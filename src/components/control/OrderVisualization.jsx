@@ -43,6 +43,7 @@ function DisplayRow({
 export function OrderPreview({
     hideButton,
     toggleItem,
+    removeItem,
     state
 }){
     let {convert,order,change} = state,
@@ -61,7 +62,9 @@ export function OrderPreview({
         shopCurr = shop.currency;
     return(
         <div>
-            <h4 className="bolder sbmargin">{shop.name}</h4>
+            <h4 className="bolder sbmargin">
+                {shop.name}
+            </h4>
             <div className="greenline"></div>
             <div className="ordercont mrpadding">
                 {
@@ -74,33 +77,38 @@ export function OrderPreview({
                             const elem = (
                                 <div key={i}>
                                     <div className="stmargin">
-                                        <h5 className="bolder" style={{color:"var(--outline)"}}>
+                                        <h5 className="bolder nomargin" style={{color:"var(--outline)"}}>
                                             {item.name}
                                             <span className="shmargin bolder">
                                                 &#10799;{quant}
                                             </span>
-                                            <button
-                                                value={-1}
-                                                index={i}
-                                                className="bolder"
-                                                onClick={toggleItem}>
-                                                -
-                                            </button>
-                                            <button
-                                                index={i}
-                                                value={1}
-                                                className="bolder"
-                                                onClick={toggleItem}>
-                                                +
-                                            </button>
+                                            <div className="fright iblock">
+                                                <button
+                                                    value={-1}
+                                                    index={i}
+                                                    className="bolder"
+                                                    onClick={toggleItem}>
+                                                    -
+                                                </button>
+                                                <button
+                                                    index={i}
+                                                    value={1}
+                                                    className="bolder"
+                                                    onClick={toggleItem}>
+                                                    +
+                                                </button>
+                                                <button
+                                                    index={i}
+                                                    className="bolder stext button"
+                                                    onClick={removeItem}>
+                                                    &#10799; remove
+                                                </button>
+                                            </div>
                                         </h5>
-                                        <span className="bolder">
-                                            {order.shop.name},
-                                        </span>
-                                        <span className="selected shmargin">
+                                        <span className="selected bolder">
                                             {item.category}
                                         </span>
-                                        <p>
+                                        <p className="nomargin">
                                             {item.description}
                                         </p>
                                     </div>
@@ -207,7 +215,7 @@ export function OrderPreview({
                             onClick={()=>false}
                             style={{backgroundColor:"var(--main)"}}
                             className="vmargin button bolder wfull">
-                        I'm ready to order!
+                            I'm ready to order!
                         </button>
                     </Link>
             }
@@ -219,7 +227,8 @@ export function OrderBanner({
     toggleItem,
     state,
     hideBanner,
-    toggleModal
+    toggleModal,
+    removeItem
 }){
     const [showHover,toggleHover] = useState(false),
         toggleH = e => {
@@ -228,9 +237,7 @@ export function OrderBanner({
         };
     return (
         <div
-            onMouseEnter={toggleH}
-            onMouseLeave={toggleH}
-            className="iblock wfull "
+            className="col-md-3 alignright"
             style={{position:"relative"}}>
             <button
                 onClick={toggleModal}
@@ -238,18 +245,22 @@ export function OrderBanner({
                 your order
             </button>
             <button
+                onClick={toggleH}
                 className="button bolder d-none d-md-inline-block">
                 your order
             </button>
-            <div className={
+            <div
+                className={
                 showHover&&!hideBanner
                     ? "absolute wfull"
-                    : "hidden"}>
-                <div className="relative" style={{right:"-80%"}}>
+                    : "hidden"
+                }>
+                <div className="relative" style={{width:"5px",right:"-80%"}}>
                     <div className="arrowup"></div>
                 </div>
                 <div className="gborder alignleft mpadding preview relative">
                     <OrderPreview
+                        removeItem={removeItem}
                         toggleItem={toggleItem}
                         state={state}/>
                 </div>

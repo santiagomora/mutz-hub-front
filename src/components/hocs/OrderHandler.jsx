@@ -46,6 +46,7 @@ export default function OrderHandler( Target,hideBanner ){
             this.toggleItem = this.toggleItem.bind(this);
             this.saveOrder = this.saveOrder.bind(this);
             this.store = this.store.bind(this);
+            this.removeItem = this.removeItem.bind(this);
             this.toggleModal = this.toggleModal.bind(this);
         }
 
@@ -80,6 +81,19 @@ export default function OrderHandler( Target,hideBanner ){
             this.store('order',order);
         }
 
+        removeItem(e){
+            e.preventDefault();
+            let item;
+            const elem = e.currentTarget,
+                index = parseInt(elem.getAttribute("index")),
+                {order} = this.state,
+                {items} = order;
+            if (items.length>0){
+                items.splice(index,1);
+                order.items = items;
+            }
+            this.store('order',order);
+        }
 
         saveOrder(item){
             const {shop,order} = this.state;
@@ -101,7 +115,6 @@ export default function OrderHandler( Target,hideBanner ){
 
         toggleModal(e){
             e.preventDefault();
-            console.log("culo")
             this.setState({modal:!this.state.modal})
         }
 
@@ -117,11 +130,11 @@ export default function OrderHandler( Target,hideBanner ){
             const {pathname} = this.props.location,
                 {order,shop,modal} = this.state,
                 {change,convert} = this.context,
-                hideBanner = pathname.match('/checkout'),
+                hideBanner = pathname.match('checkout'),
                 hideCrumbs = pathname.match('/dashboard');
 
             return (
-                <>
+                <div className="container-fluid">
                     <Modal show={modal}>
                         <div
                             className="container-fluid">
@@ -141,28 +154,28 @@ export default function OrderHandler( Target,hideBanner ){
                             </div>
                         </div>
                     </Modal>
-                    <div className="container-fluid">
-                        <div className={hideCrumbs ? "hidden" : "row"}>
-                            <BreadCrumb
-                                hideBanner={hideBanner}
-                                location={pathname}
-                                current={matchSection(pathname)}
-                                toggleModal={this.toggleModal}
-                                state={{change,shop,order,convert}}
-                                toggleItem={this.toggleItem}/>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-12"
-                                style={{margin:"0px"}}>
-                                <Target
-                                    toggleItem={this.toggleItem}
-                                    save = {this.saveOrder}
-                                    {...this.state}
-                                    {...this.props}/>
-                            </div>
+                    <div className={hideCrumbs ? "hidden" : "row"}>
+                        <BreadCrumb
+                            hideBanner={hideBanner}
+                            location={pathname}
+                            removeItem={this.removeItem}
+                            current={matchSection(pathname)}
+                            toggleModal={this.toggleModal}
+                            state={{change,shop,order,convert}}
+                            toggleItem={this.toggleItem}/>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-12 nopadding"
+                            style={{margin:"0px"}}>
+                            <Target
+                                toggleItem={this.toggleItem}
+                                removeItem={this.removeItem}
+                                save = {this.saveOrder}
+                                {...this.state}
+                                {...this.props}/>
                         </div>
                     </div>
-                </>
+                </div>
             )
         }
     }

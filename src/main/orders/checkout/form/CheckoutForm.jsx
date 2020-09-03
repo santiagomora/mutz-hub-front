@@ -80,7 +80,7 @@ function CheckoutForm({
                     required fields are marked with
                     <span className="shmargin bolder">*</span>
                 </div>
-                <div className="col-md-2 alignright nopadding">
+                <div className="col-md-10 stpadding alignright">
                     {
                         loading
                         ?   <div className="iblock shmargin">
@@ -92,16 +92,14 @@ function CheckoutForm({
                             </div>
                         : <></>
                     }
-                </div>
-                <div className="col-md-8 stpadding alignright">
                     <button
                         onClick={cancel}
-                        className="bolder wfull light iblock fifty">
+                        className="bolder wfull iblock">
                         cancel
                     </button>
                     <button
                         onClick={submit}
-                        className="button bolder fifty"
+                        className="button iblock bolder"
                         style={{backgroundColor:"var(--main)"}}>
                         submit
                     </button>

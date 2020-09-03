@@ -16,6 +16,9 @@ import{
 import {
     storage,
 } from '../../../helper/helperIndex.jsx';
+import {
+    RESOURCE_URL
+} from '../../../utils/api.jsx';
 
 import Modal from '../../../components/control/Modal.jsx';
 
@@ -27,7 +30,6 @@ import LoadingComponent from '../../../components/composition/LoadingComponent.j
 
 import RequestHandler from '../../../components/hocs/RequestHandler.jsx';
 
-const WIDTH = 100;
 
 const HEIGHT = 100;
 
@@ -37,7 +39,8 @@ function OrderForm( props ) {
             modal:false,
             selected:null,
             items:[],
-            data:null
+            data:null,
+            pic:''
         }),
         toggleModal = (data) => (
             e => {
@@ -52,7 +55,7 @@ function OrderForm( props ) {
         {selected} = state;
 
     return (
-        <div className="container-fluid">
+        <div className="container-fluid mvpadding   ">
             <Modal
                 show={state.modal}>
                 <SelectVariations

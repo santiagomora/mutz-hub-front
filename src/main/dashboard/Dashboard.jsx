@@ -36,7 +36,7 @@ function Dashboard( props ){
             onError: (err) => console.log(err)
         });
     return (
-        <div className="container-fluid nopadding">
+        <div className="container-fluid">
             <div className="row">
                 <div className="col-md-12">
                     <h1 className="bolder iblock">Dashboard</h1>
@@ -59,9 +59,10 @@ function Dashboard( props ){
                         requestHandler={props.requestHandler}
                         user={user}/>
                 </div>
-                <div className="col-md-5 nopadding">
+                <div className="col-md-5">
                     <h3 className="bolder">Current order</h3>
                         <OrderPreview
+                            removeItem={props.removeItem}
                             state={{change,shop,order,convert}}
                             toggleItem={props.toggleItem}/>
                 </div>

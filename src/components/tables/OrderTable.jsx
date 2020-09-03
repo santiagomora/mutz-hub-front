@@ -10,6 +10,7 @@ const MAX_ROWS = 8;
 const orderColumns = [{
         Header: "ID",
         accessor:"ord_id",
+        width:40,
         headerClassName: 'bolder alignleft'
     },{
         Header: "Shop",
@@ -19,14 +20,6 @@ const orderColumns = [{
         Header: "Date",
         accessor:"ord_date",
         headerClassName: 'bolder alignleft'
-    },{
-        Header: "Delivery Address",
-        accessor:"ord_cli_address",
-        headerClassName: 'bolder alignleft',
-        maxWidth:200,
-        Cell:({original}) => {
-            return <div className="break wfull">{original.ord_cli_address}</div>
-        }
     },{
         Header: "Observations",
         accessor:"ord_observations",
@@ -45,27 +38,6 @@ const orderColumns = [{
             )
         }
     },{
-        Header: "Shop Currency",
-        accessor:"ord_shop_currency",
-        headerClassName: 'bolder alignleft',
-        Cell:({original}) => {
-            return <div className="bolder alignright wfull">{original.ord_shop_currency}</div>
-        }
-    },{
-        Header: "Currency",
-        accessor:"ord_currency",
-        headerClassName: 'bolder alignleft',
-        Cell:({original}) => {
-            return <div className="alignright wfull bolder selected">{original.ord_currency}</div>
-        }
-    },{
-        Header: "Conversion rate",
-        accessor:"ord_conversion",
-        headerClassName: 'bolder alignleft',
-        Cell:({original}) => {
-            return <div className="alignright wfull">{original.ord_conversion}</div>
-        }
-    },{
         Header: "Shipping",
         accessor:"ord_shipping",
         headerClassName: 'bolder alignleft',
@@ -78,6 +50,14 @@ const orderColumns = [{
         headerClassName: 'bolder alignright',
         Cell:({original}) => {
             return <div className="alignright wfull">{original.ord_total}</div>
+        }
+    },{
+        Header: "",
+        accessor:"ord_currency",
+        width:40,
+        headerClassName: 'bolder alignleft',
+        Cell:({original}) => {
+            return <div className="alignright wfull bolder selected">{original.ord_currency}</div>
         }
     }
 ];

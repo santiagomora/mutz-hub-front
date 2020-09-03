@@ -16,6 +16,10 @@ const evaluate = {
         eval:(e,p) => p ? ((e+"").match(/[^0-9]/gi)||[]).length>0 : false,
         mess:(name,max) => `the field ${name} must be numeric`
     },
+    alphabetic: {
+        eval:(e,p) => p ? ((e+"").match(/[^A-Za-z\s]/gi)||[]).length>0 : false,
+        mess:(name,max) => `the field ${name} must be alphabetic`
+    },
     email: {
         eval:(e,p) => p ? ((e+"").match(/\@/gi)||[]).length!==1 : false,
         mess:(name,max) => `the field ${name} must be a valid email address`

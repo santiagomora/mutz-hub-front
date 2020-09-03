@@ -1,12 +1,14 @@
 import React, {
-    useState
+    useState,
+    useEffect
 } from 'react';
 import {
     DisplayGrid
 } from '../../components/grid/DisplayGrid.jsx';
-import{
-    RESOURCE_URL
-} from '../../utils/api.jsx';
+
+import SectionTitle from './SectionTitle.jsx';
+
+const WIDTH = "50px";
 
 const filter = (data,term) => {
     return data.filter(
@@ -19,38 +21,53 @@ const filter = (data,term) => {
 }
 
 export default function MenuDisplay(props) {
-    const [tab,changeTab] = useState(props.first),
+    const [tab,changeTab] = useState({}),
         [search,changeSearch] = useState(""),
+        {shop} = props,
         clickTab = e => {
             e.preventDefault();
-            changeTab(e.currentTarget.getAttribute('value'));
+            const name = e.currentTarget.getAttribute('value'),
+                pic = e.currentTarget.getAttribute('picture');
+            changeTab({name,pic});
         },
         changeTerm = e => {
             const val = e.currentTarget.value;
             changeSearch(val);
         },
         {categories} = props.data;
+
+    useEffect( () => {
+        changeTab({name:props.first,pic:categories[0].picture})
+    },[]);
+
     return (
         <div className="container-fluid nopadding">
-            <div className="row mtpadding">
-                <div className="col-md-3" style={{paddingLeft:"0px"}}>
-                    <div className="sticky-top mvpadding"
+            <SectionTitle
+                title={shop.name}
+                iconurl={shop.pic}
+                bgurl={tab.pic}
+                description={shop.description}/>
+            <div className="row ">
+                <div
+                    className="col-md-3">
+                    <div className="sticky-top mtpadding"
                         style={{zIndex:0,backgroundColor:"white"}}>
-                        <h4 className="bolder">Categories</h4>
+                        <h3 className="bolder">Categories</h3>
                         <div className="secondary-line"></div>
                         {
                             categories.map(
                                 (e,i) => {
-                                    const {description,menu} = e;
+                                    const {description,menu,picture} = e;
                                     return (
                                         <div className="stpadding" key={i}>
                                             <button
                                                 onClick={clickTab}
                                                 className="nopadding wfull mtmargin"
+                                                picture={picture}
                                                 value={description}>
                                                 <div className="fifty alignleft iblock">
                                                     <h5 className={
-                                                            description === tab
+                                                            description === tab.name
                                                                 ? "bolder nomargin iblock fifty"
                                                                 : "bolder nomargin light iblock fifty"
                                                         }>
@@ -78,45 +95,61 @@ export default function MenuDisplay(props) {
                                 type="text"
                                 value={search}
                                 onChange={changeTerm}
-                                placeholder={`search ${tab}`}
+                                placeholder={`search ${tab.name}`}
                                 className="search wfull"/>
                         </div>
                     </div>
                 </div>
-                <div className="col-md-9 container-fluid">
-                {
-                    categories.filter( e => e.description === tab ).map(
-                        (e,i) => {
-                            const {description,menu,extras} = e;
-                            return (
-                                <div key={i}>
-                                    <img
-                                        style={{
-                                            width:"100%",
-                                            maxWidth:"100%",
-                                            marginBottom:"10px"
-                                        }}
-                                        src={`${RESOURCE_URL}${e.picture}`}/>
-                                    {
-                                        DisplayGrid({
-                                            data:filter(menu,search),
-                                            GridElement:props.grid.elem({
-                                                clickHandler:props.clickHandler
-                                            }),
-                                            extra:{
-                                                ...props.grid.extra,
-                                                extras
-                                            },
-                                            colNum:props.grid.columns
-                                        })
-                                    }
-                                </div>
+                <div className="col-md-9 nopadding">
+                    <div className="container-fluid" >
+                        {
+                            categories.filter( e => e.description === tab.name ).map(
+                                (e,i) => {
+                                    const {description,menu,extras} = e;
+                                    return (
+                                        <>
+                                            <div className="row">
+                                                <div className="col-md-12">
+                                                    <h3 className="bolder mtpadding">
+                                                        {e.description}
+                                                    </h3>
+                                                    <div className="grayline"></div>
+                                                </div>
+                                                <div className="col-md-12 sbmargin mtpadding">
+                                                    <div className="container-fluid">
+                                                    {
+                                                        DisplayGrid({
+                                                            data:filter(menu,search),
+                                                            GridElement:props.grid.elem({
+                                                                clickHandler:props.clickHandler
+                                                            }),
+                                                            extra:{
+                                                                ...props.grid.extra,
+                                                                extras
+                                                            },
+                                                            colNum:props.grid.columns
+                                                        })
+                                                    }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )
+                                }
                             )
                         }
-                    )
-                }
+                    </div>
                 </div>
             </div>
         </div>
     );
 }
+/*
+
+    <div
+        className="row dgrayback whitefont"
+        style={{overflow:"hidden"}}
+        key={i}>
+        <div className="col-md-8 nopadding">
+        </div>
+    </div>*/

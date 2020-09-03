@@ -22,6 +22,8 @@ import ConditionalRender from '../../../components/composition/ConditionalRender
 
 import RequestHandler from '../../../components/hocs/RequestHandler.jsx';
 
+import SectionTitle from '../../../components/control/SectionTitle.jsx';
+
 const validation = {
     ord_cli_address:{
         required:true,
@@ -34,7 +36,8 @@ const validation = {
     },
     ord_cli_name:{
         required:true,
-        max:50
+        max:50,
+        alphabetic:true
     },
     ord_cli_email:{
         required:true,
@@ -164,12 +167,14 @@ class Checkout extends Component {
             curr = change.curr,
             form = initializeForm(user||{});
         return (
-            <>
+            <div className="container-fluid mvpadding">
                 <Modal show={this.state.show}>
                     <div className="container-fluid mvpadding">
                         <div className="row">
                             <div className="col-md-12 container-fluid">
-                                <h3 className="selected">{this.state.success}</h3>
+                                <h3 className="selected">
+                                    {this.state.success}
+                                </h3>
                             </div>
                         </div>
                         <div className="row justify-content-end">
@@ -179,39 +184,43 @@ class Checkout extends Component {
                                         onClick={this.redirect}
                                         style={{backgroundColor:"var(--main)",color:"white"}}
                                         className="button bolder wfull">
-                                        accept
+                                        Accept
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </Modal>
-                <div className="container-fluid mvpadding">
-                    <div className="row">
-                        <ConditionalRender
-                            other={<></>}
-                            condition={props.hideForm}>
-                            <div className="col-md-6">
-                                <h4 className="bolder">Almost there!</h4>
-                                <p className="bolder redfont">{this.state.error}</p>
-                                <CheckoutForm
-                                    submit={this.submit}
-                                    fieldDisplay={fieldDisplay}
-                                    validation={validation}
-                                    form = {form}
-                                    cancel={this.props.cancelRequest}
-                                    loading={this.state.loading}/>
-                            </div>
-                        </ConditionalRender>
-                        <div className={props.hideForm ? "col-md-12" : "col-md-6"}>
-                            <OrderPreview
-                                toggleItem={props.toggleItem}
-                                state={{order,change,convert}}
-                                hideButton={!props.showButton}/>
+                <SectionTitle
+                    title="Almost there!"
+                    iconurl="/img/checkout.png"
+                    description="let us know the details of your order"/>
+                <div className="row mvpadding">
+                    <ConditionalRender
+                        other={<></>}
+                        condition={props.hideForm}>
+                        <div className="col-md-6 nopadding">
+                            <p className="bolder redfont nomargin">
+                                {this.state.error}
+                            </p>
+                            <CheckoutForm
+                                submit={this.submit}
+                                fieldDisplay={fieldDisplay}
+                                validation={validation}
+                                form = {form}
+                                cancel={this.props.cancelRequest}
+                                loading={this.state.loading}/>
                         </div>
+                    </ConditionalRender>
+                    <div className={props.hideForm ? "col-md-12" : "col-md-6"}>
+                        <OrderPreview
+                            removeItem={props.removeItem}
+                            toggleItem={props.toggleItem}
+                            state={{order,change,convert}}
+                            hideButton={!props.showButton}/>
                     </div>
                 </div>
-            </>
+            </div>
         )
     }
 }

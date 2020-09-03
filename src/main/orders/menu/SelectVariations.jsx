@@ -144,7 +144,7 @@ export default class SelectVariations extends Component {
                 style={{maxHeight:"90vh",overflowY:"scroll"}}>
                 <div className="row justify-content-end sticky-top">
                     <button onClick={props.toggleModal} className="button bolder">
-                        Close
+                        &#10799; close
                     </button>
                 </div>
                 <div className="row"

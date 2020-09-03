@@ -110,15 +110,17 @@ export default class Profile extends Component {
                 <div className="row justify-content-center">
                     <div className="col-md-12 nopadding">
                         <p>fill any of these fields if you want to change your personal information.</p>
-                        <RegisterForm
-                            profile
-                            submit={this.submit}
-                            fieldDisplay={fieldDisplay}
-                            validation={validation}
-                            form = {this.form}
-                            loading={this.state.loading}/>
-                        <div className="selected">{this.state.success}</div>
-                        <div className="redfont">{this.state.error}</div>
+                        <div className="lightbox">
+                            <RegisterForm
+                                profile
+                                submit={this.submit}
+                                fieldDisplay={fieldDisplay}
+                                validation={validation}
+                                form = {this.form}
+                                loading={this.state.loading}/>
+                            <div className="selected">{this.state.success}</div>
+                            <div className="redfont">{this.state.error}</div>
+                        </div>
                     </div>
                 </div>
             </div>

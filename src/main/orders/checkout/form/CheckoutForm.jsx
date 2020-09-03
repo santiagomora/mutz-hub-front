@@ -18,7 +18,7 @@ function CheckoutForm({
     cancel
 }) {
     return (
-        <div className="container-fluid mvpadding">
+        <div className="container-fluid mvpadding lightbox">
             <div className="row">
                 <div className="col-md-6">
                     <Text

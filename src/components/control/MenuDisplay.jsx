@@ -50,13 +50,7 @@ export default function MenuDisplay(props) {
             <div className="row">
                 <div
                     className="mtmargin col-md-3">
-                    <div className="sticky-top mpadding" style={{
-                            zIndex:0,
-                            backgroundColor:"#f2f2f2",
-                            border:"solid 4px #f2f2f2",
-                            borderRadius:"5px",
-                            top:"15px"
-                        }}>
+                    <div className="sticky-top mpadding lightbox" style={{zIndex:1,top:"15px"}}>
                         <h3 className="nomargin bolder selected">Categories</h3>
                         {
                             categories.map(

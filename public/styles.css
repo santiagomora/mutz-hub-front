@@ -471,3 +471,8 @@ button{
 .ReactModal__Overlay{
     z-index:999;
 }
+.lightbox{
+    background-color:#f2f2f2;
+    border:solid 4px #f2f2f2;
+    border-radius:5px;
+}

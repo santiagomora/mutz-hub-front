@@ -171,7 +171,7 @@ function itemColumns({ord_currency,ord_conversion}){
 }
 
 export default function OrderTable({data}){
-    const orders = data.orders;
+    const orders = data.orders||[];
     return (
         <div>
             <ReactTable

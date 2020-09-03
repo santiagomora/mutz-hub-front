@@ -6,7 +6,7 @@ export const BASE_URL = 'https://mutz-hub-back.herokuapp.com';
 
 //export const RESOURCE_URL = 'http://127.0.0.1:3000';
 
-export const RESOURCE_URL = https://mutz-hub.herokuapp.com';//'http://127.0.0.1:3000';
+export const RESOURCE_URL = 'https://mutz-hub.herokuapp.com';//'http://127.0.0.1:3000';
 
 console.log("hila")
 

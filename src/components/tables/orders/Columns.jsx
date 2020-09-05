@@ -62,7 +62,7 @@ export function Columns(clickHandler){
             maxWidth:100,
             headerClassName: 'bolder alignleft',
             Cell:({original}) => {
-                const {ord_shipping,ord_currency} = original;
+                const {ord_shipping,ord_currency,ord_conversion} = original;
                 return (
                     <Price
                         text=""

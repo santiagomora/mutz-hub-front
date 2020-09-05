@@ -66,7 +66,7 @@ export function Columns(clickHandler){
                 return (
                     <Price
                         text=""
-                        price={ord_shipping}
+                        price={ord_shipping*ord_conversion}
                         currency={ord_currency}/>
                 )
             }
@@ -76,11 +76,11 @@ export function Columns(clickHandler){
             maxWidth:120,
             headerClassName: 'bolder alignleft',
             Cell:({original}) => {
-                const {ord_total,ord_currency} = original;
+                const {ord_total,ord_currency,ord_conversion} = original;
                 return (
                     <Price
                         text=""
-                        price={ord_total}
+                        price={ord_total*ord_conversion}
                         currency={ord_currency}/>
                 )
             }

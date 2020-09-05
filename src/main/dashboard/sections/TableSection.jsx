@@ -56,14 +56,14 @@ function SingleOrder({data,toggleModal,modalState}){
                 </div>
             </div>
             <div className="row mhpadding">
-                <div className="col-md-3">
-                    <h5 className="bolder">
+                <div className="col-md-3 sbpadding">
+                    <h5 className="bolder nomargin">
                         Cellphone:
                     </h5>
                     {order.ord_cli_telephone}
                 </div>
-                <div className="col-md-3">
-                    <h5 className="bolder">
+                <div className="col-md-3 sbpadding">
+                    <h5 className="bolder nomargin">
                         Email:
                     </h5>
                     {order.ord_cli_email}

@@ -15,7 +15,7 @@ export const GET = (
 ) => {
     return axios({
         method:'get',
-        timeout: 5000,
+        timeout: 10000,
         baseURL: API_BASE,
         crossDomain:true,
         withCredentials:true,

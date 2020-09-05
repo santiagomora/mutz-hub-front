@@ -12,7 +12,7 @@ import Loader from 'react-loader-spinner';
 
 const validation = {
     cli_password:{
-        required:true
+        required:false
     },
     cli_address:{
         required:true,
@@ -92,9 +92,15 @@ export default class Profile extends Component {
                                 () => {
                                     const {msg,success} = res.data,
                                         upd = success
-                                            ? {success:msg,error:false}
-                                            : {error:msg,success:false};
-                                    this.setState({...upd})
+                                            ? {success:msg+'...Refreshing page.',error:false}
+                                            : {error:msg+'... Refreshing page.',success:false};
+                                        this.setState(
+                                            {...upd},
+                                            () => setTimeout(
+                                                () => this.props.history.go(0),
+                                                2000
+                                            )
+                                        )
                                     }
                                 )
                             }
@@ -118,8 +124,10 @@ export default class Profile extends Component {
                                 validation={validation}
                                 form = {this.form}
                                 loading={this.state.loading}/>
-                            <div className="selected">{this.state.success}</div>
-                            <div className="redfont">{this.state.error}</div>
+                            <div className="padding">
+                                <div className="selected">{this.state.success}</div>
+                                <div className="redfont">{this.state.error}</div>
+                            </div>
                         </div>
                     </div>
                 </div>

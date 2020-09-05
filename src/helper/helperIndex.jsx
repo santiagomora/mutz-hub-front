@@ -7,6 +7,9 @@ import {saveHistory} from "./src/saveHistory.jsx";
 import {searchItem} from "./src/searchItem.jsx";
 import {toggleItem} from "./src/toggleItem.jsx";
 import {validation} from "./src/validation.jsx";
+import {Price,LargePrice} from './src/displayPrice.jsx';
+import {Variations} from './src/variations.jsx';
+import {getItemTotal} from './src/getTotal.jsx';
 
 export {checkKeys};
 export {storage};
@@ -17,3 +20,7 @@ export {saveHistory};
 export {searchItem};
 export {toggleItem};
 export {validation};
+export {Price};
+export {LargePrice};
+export {Variations};
+export {getItemTotal};

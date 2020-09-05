@@ -6,7 +6,8 @@ import {
 } from '../../../../components/input/CheckBox.jsx';
 import {
     round,
-    searchItem
+    searchItem,
+    Price
 } from '../../../../helper/helperIndex.jsx';
 
 export default function DisplayExtras({
@@ -36,14 +37,12 @@ export default function DisplayExtras({
                                         <p className="nomargin bolder">{ex.name}</p>
                                         <p className="nomargin">{ex.description}</p>
                                     </div>
-                                    <div className="iblock fifty">
-                                        <p className="alignright vmiddle nomargin wfull">
-                                            <span className="shmargin">
-                                                <span className="bolder">+</span>
-                                                {convert(shop.currency,ex.price)}
-                                            </span>
-                                            <span className="selected">{crr}</span>
-                                        </p>
+                                    <div className="iblock fifty alignright">
+                                        <Price
+                                            text={<span className="bolder">charge:</span>}
+                                            price={convert(shop.currency,ex.price)}
+                                            currency={crr}
+                                            withSum/>
                                     </div>
                                 </>
                             }

@@ -8,7 +8,8 @@ import {
 import {
     currencyChange,
     searchItem,
-    round
+    round,
+    LargePrice
 } from '../../../helper/helperIndex.jsx';
 import {
     RESOURCE_URL
@@ -147,29 +148,40 @@ export default class SelectVariations extends Component {
                         &#10799; close
                     </button>
                 </div>
-                <div className="row"
-                    style={{maxHeight:"90%"}}>
-                    <div className="col-md-12">
-                        <div className="iblock mrpadding">
-                            <img
-                                className="asuper"
-                                src={`${RESOURCE_URL}${data.pic}`}
-                                width={`${WIDTH}px`}
-                                height={`${HEIGHT}px`}/>
+                <div className="row">
+                    <div className="col-md-9 container-fluid">
+                        <div className="row">
+                            <div className="col-md-12">
+                                <h2 className="bolder selected">Choose your extras</h2>
+                                <div className="secondary-line"></div>
+                            </div>
                         </div>
-                        <div className="iblock">
-                            <h3 className="bolder">Choose your extras</h3>
-                            <h4>
-                                <span>You selected </span>
-                                <span className="bolder redfont smargin">{data.name}</span>
-                            </h4>
-                            <h5>
-                                <span className="bolder">base price:</span>
-                                <span className="shmargin">{convert(shop.currency,price)}</span>
-                                <span className="selected">{currentName}</span>
-                            </h5>
-                            <p>{data.description}</p>
+                        <div className="row mtmargin">
+                            <div className="col-md-6">
+                                <h3 className="bolder redfont">
+                                    {data.name}
+                                </h3>
+                            </div>
+                            <div className="col-md-6 alignright">
+                                <LargePrice
+                                    text={<span className="bolder">base price:</span>}
+                                    price={convert(shop.currency,price)}
+                                    currency={currentName}/>
+                            </div>
+                            <div className="col-md-12">
+                                <h5>{data.description}</h5>
+                            </div>
                         </div>
+                    </div>
+                    <div className="col-md-3 aligncenter">
+                        <img
+                            src={`${RESOURCE_URL}${data.pic}`}
+                            width={`${WIDTH}px`}
+                            height={`${HEIGHT}px`}/>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-12 nopadding">
                         {
                             Object.keys(data.variations||{}).length>0
                             ?
@@ -232,15 +244,10 @@ export default class SelectVariations extends Component {
                         </div>
                     </div>
                     <div className="col-md-4 alignright">
-                        <h5>
-                            <span className="bolder">Total...:</span>
-                            <span className="shmargin">
-                                { convert(shop.currency,total*form.quantity)}
-                            </span>
-                            <span className="selected">
-                                {currentName}
-                            </span>
-                        </h5>
+                        <LargePrice
+                            text={<span className="bolder">Total:</span>}
+                            price={convert(shop.currency,total*form.quantity)}
+                            currency={currentName}/>
                     </div>
                     <div className="col-md-4 alignright">
                         <button

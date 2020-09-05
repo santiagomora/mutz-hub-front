@@ -23,6 +23,8 @@ import TableSection from './sections/TableSection.jsx'
 
 import RequestHandler from '../../components/hocs/RequestHandler.jsx';
 
+import SectionTitle from '../../components/control/SectionTitle.jsx';
+
 function Dashboard( props ){
     const {data,requestHandler,change,shop,order,convert} = props,
         {user} = useContext( AuthUser ),
@@ -37,21 +39,15 @@ function Dashboard( props ){
         });
     return (
         <div className="container-fluid">
+            <SectionTitle
+                title={`Welcome back!`}
+                iconurl={'/img/dashboard.png'}
+                description={`${user.cli_name}'s personal account.`}/>
             <div className="row">
-                <div className="col-md-12">
-                    <h1 className="bolder iblock">
-                        Dashboard
-                    </h1>
+                <div className="col-md-12 mtpadding">
+                    <TableSection
+                        data={data} />
                 </div>
-            </div>
-            <div className="row">
-                <LoadingComponent
-                    data={data}>
-                    <div className="col-md-12">
-                        <TableSection
-                            data={data} />
-                    </div>
-                </LoadingComponent>
             </div>
             <div className="row mtpadding">
                 <div className="col-md-6">
@@ -63,10 +59,10 @@ function Dashboard( props ){
                 </div>
                 <div className="col-md-6">
                     <h3 className="bolder">Current order</h3>
-                        <OrderPreview
-                            removeItem={props.removeItem}
-                            state={{change,shop,order,convert}}
-                            toggleItem={props.toggleItem}/>
+                    <OrderPreview
+                        removeItem={props.removeItem}
+                        state={{change,shop,order,convert}}
+                        toggleItem={props.toggleItem}/>
                 </div>
             </div>
         </div>

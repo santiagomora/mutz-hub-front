@@ -32,7 +32,7 @@ export const POST = (
 ) => {
     return axios({
         method: 'post',
-        timeout: 5000,
+        timeout: 8000,
         baseURL: API_BASE,
         crossDomain:true,
         withCredentials:true,

@@ -374,7 +374,9 @@ button{
 }
 .break{
     white-space: normal;
-
+}
+.nowrap{
+    white-space:nowrap;
 }
 .rt-thead, .rt-th, .-header,.ReactTable,.pagination-bottom,.-pagination{
     box-shadow: none !important;
@@ -475,4 +477,10 @@ button{
     background-color:#f2f2f2;
     border:solid 4px #f2f2f2;
     border-radius:5px;
+}
+.Pending{
+    color:var(--warning);
+}
+.mtext{
+    font-size:16px;
 }

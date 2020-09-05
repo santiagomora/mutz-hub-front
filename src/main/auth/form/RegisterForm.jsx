@@ -25,7 +25,9 @@ function RegisterForm({
         ? "col-md-6"
         : "col-md-12"
     return (
-        <div className="container-fluid mvpadding">
+        <form
+            autoComplete="off"
+            className="container-fluid mvpadding">
             <div className="row">
                 <div className={`${prclass} sbpadding`}>
                     <Text
@@ -109,7 +111,7 @@ function RegisterForm({
                     }
                 </div>
             </div>
-        </div>
+        </form>
     );
 }
 

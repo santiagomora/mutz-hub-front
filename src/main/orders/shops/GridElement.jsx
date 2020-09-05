@@ -8,7 +8,9 @@ import {
     RESOURCE_URL
 } from '../../../utils/api.jsx';
 import {
-    round
+    round,
+    LargePrice,
+    Price
 } from '../../../helper/helperIndex.jsx'
 
 export const COLUMNS = 3;
@@ -35,12 +37,10 @@ export function GridElement({
             className={`hoverlight roundborder col-md-${12/cols} nomargin`}>
             <button onClick={clickHandler(data)} className="wfull amargin block mhpadding mvpadding">
                 <div className="alignright stmargin sbmargin">
-                    <span className="shmargin font20">
-                        {`${convert(data.currency,data.shipping)}`}
-                    </span>
-                    <span className="selected">
-                        {tag}
-                    </span>
+                    <LargePrice
+                        text=""
+                        price={convert(data.currency,data.shipping)}
+                        currency={<span className="mtext">{tag}</span>}/>
                     <div
                         className="bolder"
                         style={{marginTop:"-8px"}}>
@@ -67,17 +67,15 @@ export function GridElement({
                                     className={`col-xs-${12/cat.length} aligncenter hpadding`}
                                     key={i}>
                                     <div
-                                        className="bolder variation stext"
+                                        className="bolder variation stext sbmargin"
                                         style={{padding:"0px 10px"}}>
                                         {`${data.stats[d].cnt} ${d}`}
                                     </div>
-                                    <div className="bolder stext stmargin">
-                                        {`${convert(data.currency,data.stats[d].avg)}`}
-                                        <span className="selected shmargin">
-                                            {tag}
-                                        </span>
-                                    </div>
-                                    <div className="stext">on average</div>
+                                    <Price
+                                        text=""
+                                        price={convert(data.currency,data.stats[d].avg)}
+                                        currency={tag}/>
+                                    <div className="stext bolder aligncenter">on average</div>
                                 </div>
                             )
                         )

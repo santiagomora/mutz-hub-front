@@ -7,7 +7,9 @@ import {
 import {
     checkKeys,
     round,
-    saveHistory
+    saveHistory,
+    Price,
+    LargePrice
 } from '../../helper/helperIndex.jsx';
 import {
     Link
@@ -30,10 +32,11 @@ function DisplayRow({
                 <span>{name}</span>
             </h6>
             <h6 className="alignright iblock fifty">
-                <span className="iblock bolder">+</span>
-                <span className="iblock">{price}</span>
+                <Price
+                    price={price}
+                    currency={cName}
+                    withSum/>
                 <span className="shmargin bolder">&#10799;{quant}</span>
-                <span className="selected">{cName}</span>
             </h6>
         </>
     )
@@ -195,17 +198,19 @@ export function OrderPreview({
                 }
             </div>
             <div className="wfull grayline"></div>
-            <h6 className="alignright iblock wfull stpadding sbmargin">
-                <span className="iblock bolder shmargin">Shipping fee...:</span>
-                <span className="bolder">+</span>
-                <span className="iblock">{convert(shopCurr,shop.shipping)}</span>
-                <span className="selected">{cName}</span>
-            </h6>
-            <h5 className="alignright iblock wfull">
-                <span className="iblock bolder">Order total...:</span>
-                <span className="shmargin iblock">{convert(shopCurr,orderTotal+shop.shipping)}</span>
-                <span className="selected">{cName}</span>
-            </h5>
+            <div className="alignright">
+                <Price
+                    text={<span className="bolder">Shipping:</span>}
+                    price={convert(shopCurr,shop.shipping)}
+                    currency={cName}
+                    withSum/>
+            </div>
+            <div className="alignright iblock wfull">
+                <LargePrice
+                    text={<span className="bolder">Order Total:</span>}
+                    price={convert(shopCurr,orderTotal+shop.shipping)}
+                    currency={cName}/>
+            </div>
             {
                 hideButton
                 ? <></>

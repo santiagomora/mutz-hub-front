@@ -2,15 +2,16 @@ import React from 'react';
 import{
     currencyChange,
     plainArray,
-    round
+    round,
+    Variations,
+    LargePrice
 } from '../../../helper/helperIndex.jsx';
 import {
     RESOURCE_URL
 } from '../../../utils/api.jsx';
-
 export const COLUMNS = 3;
 
-const WIDTH = "100%";
+const WIDTH = "130px";
 
 export function GridElement({
     clickHandler
@@ -42,22 +43,17 @@ export function GridElement({
                 }}>
                 <div className="iblock wfull">
                     <div className="alignright svmargin">
-                        <span
-                            className="shmargin font20">
-                            {convert(shop.currency,data.base_price)}
-                        </span>
-                        <span
-                            className="bolder"
-                            style={{color:"var(--main)"}}>
-                            {tag}
-                        </span>
+                        <LargePrice
+                            text=""
+                            price={convert(shop.currency,data.base_price)}
+                            currency={<span className="mtext">{tag}</span>}/>
                         <div className="bolder" style={{marginTop:"-8px"}}>
                             base price
                         </div>
                     </div>
                     <div className="aligncenter svpadding"  style={{marginTop:"-8px"}}>
                         <img
-                            style={{maxHeight:"100px"}}
+                            width={WIDTH}
                             src={`${RESOURCE_URL}${data.pic}`}/>
                     </div>
                     <h5 className="bolder" style={{color:"var(--outline)"}}>
@@ -67,16 +63,7 @@ export function GridElement({
                     <p className="nomargin bolder">Ingredients:</p>
                     <p className="nomargin svmargin">{data.description}</p>
                     <div className="stmargin">
-                    {
-                        variations.map(
-                            (t,i) => (
-                                <span key={i} className="bolder srmargin iblock variation stext"
-                                    style={{padding:"0px 5px"}}>
-                                    {t.var_name}
-                                </span>
-                            )
-                        )
-                    }
+                        <Variations data={variations}/>
                     </div>
                 </div>
             </button>

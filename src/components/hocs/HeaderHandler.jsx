@@ -80,8 +80,9 @@ function HeaderHandler ( Body ) {
         }
 
         componentDidMount(){
-            if ( this.props.data )
-                this.getConversions( this.props.data );
+            const {data} = this.props;
+            if ( data )
+                this.getConversions( data );
         }
 
         render(){

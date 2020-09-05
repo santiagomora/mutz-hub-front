@@ -5,7 +5,8 @@ import {
     CheckBox
 } from '../../../../components/input/CheckBox.jsx';
 import {
-    round
+    round,
+    Price
 } from '../../../../helper/helperIndex.jsx';
 
 export default function DisplayVariations({
@@ -41,11 +42,11 @@ export default function DisplayVariations({
                                                     </div>
                                                     <div className="iblock fifty">
                                                         <p className="alignright vmiddle nomargin wfull">
-                                                            <span className="shmargin">
-                                                                <span className="bolder">+</span>
-                                                                {convert(shop.currency,r.var_price)}
-                                                            </span>
-                                                            <span className="selected">{crr}</span>
+                                                            <Price
+                                                                text={<span className="bolder">charge:</span>}
+                                                                price={convert(shop.currency,r.var_price)}
+                                                                currency={crr}
+                                                                withSum/>
                                                         </p>
                                                     </div>
                                                 </>

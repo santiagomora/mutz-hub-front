@@ -119,11 +119,11 @@ class Checkout extends Component {
                                 ord_cli_id:user.cli_id||"",
                                 ...form,
                             },
-                            shipping:convert(currency,shipping),
                             conversion: currency===change.curr
                                 ? 1
                                 : rate[tag],
-                            total:convert(currency,total+shipping),
+                            shipping,
+                            total:total+shipping,
                             currency:change.curr
                         },
                     }),

@@ -16,7 +16,8 @@ export default function Password({
                 {title}
             </h6>
             <div>
-                <input type="password"
+                <input
+                    type="password"
                     name={name}
                     placeholder={holder}
                     className="wfull text"

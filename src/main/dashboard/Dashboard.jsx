@@ -50,14 +50,14 @@ function Dashboard( props ){
                 </div>
             </div>
             <div className="row mtpadding">
-                <div className="col-md-6">
+                <div className="col-md-6 mbpadding">
                     <h3 className="bolder">Personal information</h3>
                     <Profile
                         history={props.history}
                         requestHandler={props.requestHandler}
                         user={user}/>
                 </div>
-                <div className="col-md-6 mtpadding">
+                <div className="col-md-6">
                     <h3 className="bolder">Current order</h3>
                     <OrderPreview
                         removeItem={props.removeItem}

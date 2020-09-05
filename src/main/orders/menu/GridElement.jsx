@@ -56,7 +56,7 @@ export function GridElement({
                             width={WIDTH}
                             src={`${RESOURCE_URL}${data.pic}`}/>
                     </div>
-                    <h5 className="bolder" style={{color:"var(--outline)"}}>
+                    <h5 className="bolder redfont" style={{color:"var(--outline)"}}>
                         {data.name}
                     </h5>
                     <div className="grayline svmargin"></div>

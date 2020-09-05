@@ -57,7 +57,7 @@ function Dashboard( props ){
                         requestHandler={props.requestHandler}
                         user={user}/>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-6 mtpadding">
                     <h3 className="bolder">Current order</h3>
                     <OrderPreview
                         removeItem={props.removeItem}

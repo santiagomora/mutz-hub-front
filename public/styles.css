@@ -437,8 +437,9 @@ button{
 }
 
 .displayflex > [class*='col-'] {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .font20{
     font-size:20px;

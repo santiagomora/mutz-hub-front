@@ -36,50 +36,54 @@ export function GridElement({
             key={data.id}
             onClick={clickHandler(data)}
             className={`hoverlight roundborder col-md-${12/cols} mvpadding`}>
-            <div className="alignright sbmargin">
-                <LargePrice
-                    text=""
-                    price={convert(data.currency,data.shipping)}
-                    currency={<span className="mtext">{tag}</span>}/>
+            <div className="wfull">
+                <div className="alignright sbmargin">
+                    <LargePrice
+                        text=""
+                        price={convert(data.currency,data.shipping)}
+                        currency={<span className="mtext">{tag}</span>}/>
+                    <div
+                        className="bolder"
+                        style={{marginTop:"-8px"}}>
+                        shipping
+                    </div>
+                </div>
                 <div
-                    className="bolder"
                     style={{marginTop:"-8px"}}>
-                    shipping
+                    <img width={WIDTH} src={`${RESOURCE_URL}${data.pic}`}/>
+                </div>
+                <h5 className="bolder alignleft redfont stpadding">
+                    {data.name}
+                </h5>
+                <div className="grayline svmargin"></div>
+                <div className="alignleft">
+                    {data.description}
                 </div>
             </div>
-            <div
-                style={{marginTop:"-8px"}}>
-                <img width={WIDTH} src={`${RESOURCE_URL}${data.pic}`}/>
-            </div>
-            <h5 className="bolder alignleft redfont stpadding">
-                {data.name}
-            </h5>
-            <div className="grayline svmargin"></div>
-            <div className="alignleft">
-                {data.description}
-            </div>
-            <div className="container-fluid nopadding mtmargin">
-                <div className="row justify-content-around">
-                {
-                    cat.map(
-                        (d,i) => (
-                            <div
-                                className={`col-xs-${12/cat.length} aligncenter hpadding`}
-                                key={i}>
+            <div className="wfull">
+                <div className="container-fluid nopadding mtmargin">
+                    <div className="row justify-content-around">
+                    {
+                        cat.map(
+                            (d,i) => (
                                 <div
-                                    className="bolder variation stext sbmargin"
-                                    style={{padding:"0px 10px"}}>
-                                    {`${data.stats[d].cnt} ${d}`}
+                                    className={`col-xs-${12/cat.length} aligncenter hpadding`}
+                                    key={i}>
+                                    <div
+                                        className="bolder variation stext sbmargin"
+                                        style={{padding:"0px 10px"}}>
+                                        {`${data.stats[d].cnt} ${d}`}
+                                    </div>
+                                    <Price
+                                        text=""
+                                        price={convert(data.currency,data.stats[d].avg)}
+                                        currency={tag}/>
+                                    <div className="stext bolder aligncenter">on average</div>
                                 </div>
-                                <Price
-                                    text=""
-                                    price={convert(data.currency,data.stats[d].avg)}
-                                    currency={tag}/>
-                                <div className="stext bolder aligncenter">on average</div>
-                            </div>
+                            )
                         )
-                    )
-                }
+                    }
+                    </div>
                 </div>
             </div>
         </button>

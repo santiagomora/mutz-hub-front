@@ -41,7 +41,7 @@ export function GridElement({
                 style={{
                     border:"solid 4px transparent"
                 }}>
-                <div className="iblock wfull">
+                <div className="wfull">
                     <div className="alignright svmargin">
                         <LargePrice
                             text=""
@@ -62,6 +62,8 @@ export function GridElement({
                     <div className="grayline svmargin"></div>
                     <p className="nomargin bolder">Ingredients:</p>
                     <p className="nomargin svmargin">{data.description}</p>
+                </div>
+                <div className="wfull">
                     <div className="stmargin">
                         <Variations data={variations}/>
                     </div>

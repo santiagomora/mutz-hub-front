@@ -7,6 +7,7 @@ import bootstrap from 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import 'react-table-v6/react-table.css'
+import '../node_modules/@fortawesome/fontawesome-free/css/all.css';
 
 ReactDOM.render(
     <Router

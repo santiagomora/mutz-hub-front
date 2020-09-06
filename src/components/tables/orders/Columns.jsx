@@ -96,15 +96,15 @@ export function Columns(clickHandler){
             }
         },{
             Header: "",
-            width:60,
+            width:40,
             accessor:"ord_id",
             headerClassName: 'bolder alignright',
             Cell:({original}) => {
                 return (
                     <button
                         onClick={clickHandler(original.ord_id)}
-                        className="valign stext iblock bolder button">
-                        more
+                        className="valign stext iblock bolder button xpadding">
+                        <i className="fas fa-eye"></i>
                     </button>
                 )
             }
@@ -183,13 +183,20 @@ export function itemColumns({ord_currency,ord_convertion}){
                 return (
                     <div className="break">
                         <div>
-                            <div className="bolder">{`${name} `}&#10799;{om_quantity}</div>
+                            <div className="bolder">
+                                {`${name} `}
+                                <i className="fas fa-times"></i>
+                                <span className="shmargin">{om_quantity}</span>
+                            </div>
                             <div>{description}</div>
                             {
                                 extras.length>0
-                                ?
-                                <span><span className="bolder">Extras:</span>{` ${varStr(extras||[],'ext_name')}`}</span>
-                                :
+                                ?(
+                                    <span>
+                                        <span className="bolder">Extras:</span>
+                                        {` ${varStr(extras||[],'ext_name')}`}
+                                    </span>
+                                ):
                                 ""
                             }
                             <div>

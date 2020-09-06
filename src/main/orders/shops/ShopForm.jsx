@@ -30,6 +30,7 @@ function ShopForm (props) {
             change:props.change,
             convert:props.convert
         };
+
     return (
         <div className="container-fluid mvpadding">
             <SectionTitle

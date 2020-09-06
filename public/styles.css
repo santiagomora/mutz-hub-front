@@ -142,6 +142,9 @@ a:hover{
 .vmiddle{
     vertical-align: middle !important;
 }
+.vtop{
+    vertical-align: text-top !important;
+}
 .subalign{
     vertical-align: sub !important;
 }
@@ -152,7 +155,9 @@ a:hover{
     margin-top:15px;
     margin-bottom:15px;
 }
-
+.xpadding{
+    padding:3px 6px !important;
+}
 .line{
     height:5px;
     border:solid 1px var(--outline);

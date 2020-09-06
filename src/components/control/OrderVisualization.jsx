@@ -36,7 +36,10 @@ function DisplayRow({
                     price={price}
                     currency={cName}
                     withSum/>
-                <span className="shmargin bolder">&#10799;{quant}</span>
+                <span className="shmargin bolder">
+                    <i className="stext shmargin fas fa-times"></i>
+                    {quant}
+                </span>
             </h6>
         </>
     )
@@ -83,7 +86,8 @@ export function OrderPreview({
                                         <h5 className="bolder nomargin" style={{color:"var(--outline)"}}>
                                             {item.name}
                                             <span className="shmargin bolder">
-                                                &#10799;{quant}
+                                                <i className="stext shmargin fas fa-times"></i>
+                                                {quant}
                                             </span>
                                             <div className="fright iblock">
                                                 <button
@@ -102,16 +106,17 @@ export function OrderPreview({
                                                 </button>
                                                 <button
                                                     index={i}
-                                                    className="bolder stext button"
+                                                    className="bolder stext button xpadding"
                                                     onClick={removeItem}>
-                                                    &#10799; remove
+                                                    <i className="stext fas fa-times-circle"></i>
+                                                    <span className="shmargin">remove</span>
                                                 </button>
                                             </div>
                                         </h5>
                                         <span className="selected bolder">
                                             {item.category}
                                         </span>
-                                        <p className="nomargin">
+                                        <p className="sbmargin">
                                             {item.description}
                                         </p>
                                     </div>
@@ -185,7 +190,7 @@ export function OrderPreview({
                                             cName={cName}/>
                                     </div>
                                     <h5 className="alignright iblock wfull">
-                                        <span className="iblock bolder">Item total...:</span>
+                                        <span className="iblock bolder">Item total:</span>
                                         <span className="shmargin iblock">{convert(shopCurr,itemTotal*e.quantity)}</span>
                                         <span className="selected">{cName}</span>
                                     </h5>
@@ -241,8 +246,12 @@ export function OrderBanner({
             toggleHover(!showHover);
         };
     const disp = showHover
-        ? <span>&#10799; close</span>
-        : <span>your order</span>
+        ? (
+            <>
+                <i className="vtop font20 fas fa-times-circle"></i>
+                <span className="shmargin">close</span>
+            </>
+        ) : <span className="shmargin">your order</span>
     return (
         <div
             className="col-md-3 alignright"
@@ -254,7 +263,7 @@ export function OrderBanner({
             </button>
             <button
                 onClick={toggleH}
-                className="button bolder d-none d-md-inline-block">
+                className="button bolder d-none d-md-inline-block xpadding">
                 {disp}
             </button>
             <div

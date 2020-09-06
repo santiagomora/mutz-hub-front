@@ -31,7 +31,7 @@ npm run build
 
 npx serve /build
 
-edit package json to set the homepage of your project
-add env variable GENERATE_SOURCEMAP=falseGENERATE_SOURCEMAP
+edit package json to set the homepage of your project <br/>
+add env variable GENERATE_SOURCEMAP=false
 
 ENJOY!

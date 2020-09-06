@@ -36,8 +36,4 @@ add env variable GENERATE_SOURCEMAP=false
 
 Remember to install the api, available on [this repo](https://github.com/santiagomora/mutz-hub-back) <br/>
 
-export const BASE_URL = 'http://127.0.0.1:8000'; to <br/>
-
-export const BASE_URL = 'https://mutz-hub-back.herokuapp.com';
-
-ENJOY!
+127.0.0.1:8000ENJOY!

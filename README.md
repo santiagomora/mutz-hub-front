@@ -1,4 +1,4 @@
-#    the mutz hub.
+#    the mutz hub. - Front end APP
 ##   We love Mozzarella
 ### to deploy on local development mode:
 clone the repository using 
@@ -35,7 +35,7 @@ edit package json to set the homepage of your project <br/>
 add env variable GENERATE_SOURCEMAP=false
 
 Remember to install the api, available on [this repo](https://github.com/santiagomora/mutz-hub-back) <br/>
-or you can consume it directly changing (on local development): <br/>
+or you can consume it directly changing (on local development) the api endpoint: <br/>
 
 export const BASE_URL = 'http://127.0.0.1:8000'; to <br/>
 

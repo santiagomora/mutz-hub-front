@@ -17,6 +17,8 @@ export const COLUMNS = 3;
 
 const WIDTH = "40%";
 
+const HEIGHT = "40%";
+
 export function GridElement({
     data,
     extra,
@@ -50,7 +52,10 @@ export function GridElement({
                 </div>
                 <div
                     style={{marginTop:"-8px"}}>
-                    <img width={WIDTH} src={`${RESOURCE_URL}${data.pic}`}/>
+                    <img
+                        height={HEIGHT}
+                        width={WIDTH}
+                        src={`${RESOURCE_URL}${data.pic}`}/>
                 </div>
                 <h5 className="bolder alignleft redfont stpadding">
                     {data.name}

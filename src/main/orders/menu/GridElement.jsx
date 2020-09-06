@@ -13,6 +13,8 @@ export const COLUMNS = 3;
 
 const WIDTH = "130px";
 
+const HEIGHT = "130px";
+
 export function GridElement({
     clickHandler
 }) {
@@ -53,6 +55,7 @@ export function GridElement({
                     </div>
                     <div className="aligncenter svpadding"  style={{marginTop:"-8px"}}>
                         <img
+                            height={HEIGHT}
                             width={WIDTH}
                             src={`${RESOURCE_URL}${data.pic}`}/>
                     </div>

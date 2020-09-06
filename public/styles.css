@@ -96,6 +96,9 @@ a:hover{
     border-radius: 4px;
     height:500px;
 }
+.white{
+    color:white;
+}
 
 .mvpadding{
     padding-top:15px;
@@ -156,7 +159,7 @@ a:hover{
     margin-bottom:15px;
 }
 .xpadding{
-    padding:3px 6px !important;
+    padding:2px 3.5px !important;
 }
 .line{
     height:5px;
@@ -164,7 +167,17 @@ a:hover{
     background-color:var(--outline);
     border-radius:3px;
 }
-
+.olheight{
+    line-height:0px;
+}
+.hfix{
+    padding-top:1px;
+}
+@-moz-document url-prefix() {
+  .hfix {
+      padding-bottom:1.5px;
+  }
+}
 .move-down{
     margin-top:5vh;
 }

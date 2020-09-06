@@ -144,9 +144,13 @@ export default class SelectVariations extends Component {
                 className="container-fluid"
                 style={{maxHeight:"90vh",overflowY:"scroll"}}>
                 <div className="row justify-content-end sticky-top">
-                    <button onClick={props.toggleModal} className="button bolder xpadding">
-                        <i className="vtop font20 fas fa-times-circle"></i>
-                        <span className="shmargin">close</span>
+                    <button
+                        onClick={props.toggleModal}
+                        className="button bolder xpadding">
+                        <div className="olheight white">
+                            <i className="vmiddle font20 fas fa-times-circle hfix"></i>
+                            <span className="vmiddle shmargin">close</span>
+                        </div>
                     </button>
                 </div>
                 <div className="row">

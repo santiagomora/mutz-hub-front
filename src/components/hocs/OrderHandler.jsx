@@ -141,8 +141,11 @@ export default function OrderHandler( Target,hideBanner ){
                             <div className="row justify-content-end">
                                 <button
                                     onClick={this.toggleModal}
-                                    className="button bolder">
-                                    &#10799; close
+                                    className="button bolder xpadding">
+                                    <div className="olheight white">
+                                        <i className="vmiddle font20 fas fa-times-circle hfix"></i>
+                                        <span className="vmiddle shmargin">close</span>
+                                    </div>
                                 </button>
                             </div>
                             <div className="row ">

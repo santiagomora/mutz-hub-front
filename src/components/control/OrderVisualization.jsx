@@ -108,8 +108,10 @@ export function OrderPreview({
                                                     index={i}
                                                     className="bolder stext button xpadding"
                                                     onClick={removeItem}>
-                                                    <i className="stext fas fa-times-circle"></i>
-                                                    <span className="shmargin">remove</span>
+                                                    <div className="olheight white">
+                                                        <i className="vmiddle fas fa-times-circle hfix"></i>
+                                                        <span style={{padding:"0px 2px"}}>remove</span>
+                                                    </div>
                                                 </button>
                                             </div>
                                         </h5>
@@ -247,10 +249,10 @@ export function OrderBanner({
         };
     const disp = showHover
         ? (
-            <>
-                <i className="vtop font20 fas fa-times-circle"></i>
-                <span className="shmargin">close</span>
-            </>
+            <div className="olheight white">
+                <i className="vmiddle font20 fas fa-times-circle hfix"></i>
+                <span className="vmiddle shmargin">close</span>
+            </div>
         ) : <span className="shmargin">your order</span>
     return (
         <div

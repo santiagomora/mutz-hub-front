@@ -29,8 +29,10 @@ function SingleOrder({data,toggleModal,modalState}){
                             toggleModal({modal,id});
                         }
                     } className="button bolder xpadding">
-                    <i className="vtop font20 fas fa-times-circle"></i>
-                    <span className="shmargin">close</span>
+                    <div className="olheight white">
+                        <i className="vmiddle font20 fas fa-times-circle hfix"></i>
+                        <span className="vmiddle shmargin">close</span>
+                    </div>
                 </button>
             </div>
             <div className="row">
@@ -78,12 +80,10 @@ function SingleOrder({data,toggleModal,modalState}){
             </div>
             <div className="row  mtpadding">
                 <div className="col-md-12">
-                    <h5 className="bolder iblock">
+                    <h5 className="bolder ">
                         Observations:
                     </h5>
-                    <div className="shmargin iblock">
-                        {order.ord_observations||"No observations made"}
-                    </div>
+                    {order.ord_observations||"No observations made"}
                 </div>
             </div>
             <div className="row">

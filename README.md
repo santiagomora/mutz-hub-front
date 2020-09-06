@@ -1,4 +1,4 @@
-#    the mutz hub. - Front end APP
+#    the mutz hub. - front end APP
 ##   We love Mozzarella
 ### to deploy on local development mode:
 clone the repository using 

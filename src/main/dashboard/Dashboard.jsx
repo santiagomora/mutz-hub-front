@@ -4,7 +4,8 @@ import React,{
     useState
 } from 'react';
 import {
-    Redirect
+    Redirect,
+    Link
 } from 'react-router-dom';
 import {
     OrderPreview
@@ -27,6 +28,7 @@ import SectionTitle from '../../components/control/SectionTitle.jsx';
 
 function Dashboard( props ){
     const {data,requestHandler,change,shop,order,convert} = props,
+        {items} = order||{},
         {user} = useContext( AuthUser ),
         updateUser = (form) => requestHandler({
             method:'put',
@@ -63,6 +65,18 @@ function Dashboard( props ){
                         removeItem={props.removeItem}
                         state={{change,shop,order,convert}}
                         toggleItem={props.toggleItem}/>
+                    {
+                        (items||[]).length<=0
+                        ?
+                            <div className="alignright">
+                                <Link to="/" className="iblock fifty">
+                                    <div className="button bolder aligncenter greenback">
+                                        Go to shops!
+                                    </div>
+                                </Link>
+                            </div>
+                        : <></>
+                    }
                 </div>
             </div>
         </div>

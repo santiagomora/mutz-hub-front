@@ -220,7 +220,7 @@ export function OrderPreview({
             </div>
             {
                 hideButton
-                ? <></>
+                ? <>culo</>
                 :
                     <Link to="/checkout">
                         <button

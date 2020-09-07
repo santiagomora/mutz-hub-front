@@ -58,7 +58,7 @@ export function OrderPreview({
         return (
             <>
                 <h5 className="bolder">You have not selected any items... yet!</h5>
-                <p>You can start by clicking any shop and then, clicking on any menu item!</p>
+                <p>You can start by clicking any shop and then selecting any menu item!</p>
             </>
         )
     }

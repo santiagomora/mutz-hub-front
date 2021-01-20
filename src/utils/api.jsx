@@ -1,8 +1,20 @@
 import axios from 'axios';
 
-export const BASE_URL = 'https://mutz-hub-back.herokuapp.com';
+// export const BASE_URL = 'https://mutz-hub-back.herokuapp.com';
+//
+// export const RESOURCE_URL = 'https://mutz-hub.herokuapp.com';
 
-export const RESOURCE_URL = 'https://mutz-hub.herokuapp.com';
+console.log( process.env.NODE_ENV )
+
+export const BASE_URL = process.env.NODE_ENV === 'production'
+    ? 'https://mutz-hub-back.herokuapp.com'
+    : 'http://127.0.0.1:8000';
+
+export const RESOURCE_URL = process.env.NODE_ENV === 'production'
+    ? 'https://mutz-hub.herokuapp.com'
+    : 'http://127.0.0.1:3000';
+
+console.log(BASE_URL,RESOURCE_URL)
 
 const API_BASE = `${BASE_URL}/api`;
 
